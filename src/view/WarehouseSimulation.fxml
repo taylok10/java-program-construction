@@ -11,32 +11,79 @@
 <!-- <?import model.Floor?> -->
 <!-- <Floor fx:id="floor" width="5" height = "5" /> -->
 
-<SplitPane dividerPositions="0.35" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="237.0">
-         <children>
-            <Label layoutX="154.0" layoutY="36.0" style="-fx-border-style: solid;" text="Robot" />
-            <Label layoutX="106.0" layoutY="73.0" style="-fx-border-style: solid;" text="Storage Shelf" />
-            <Label layoutX="92.0" layoutY="109.0" style="-fx-border-style: solid;" text="Packing Station" />
-            <Label layoutX="24.0" layoutY="150.0" style="-fx-border-style: solid;" text="Import" />
-            <Label layoutX="91.0" layoutY="150.0" style="-fx-border-style: solid;" text="Export" />
-            <Label layoutX="24.0" layoutY="205.0" style="-fx-border-style: solid;" text="Width" />
-            <Label layoutX="22.0" layoutY="293.0" style="-fx-border-style: solid;" text="Height" />
-            <Slider fx:id="sliderWidth" blockIncrement="1.0" layoutX="33.0" layoutY="242.0" majorTickUnit="1.0" max="15.0" min="5.0" minorTickCount="1" showTickLabels="true" snapToTicks="true" value="5.0" />
-            <Slider fx:id="sliderHeight" blockIncrement="1.0" layoutX="33.0" layoutY="334.0" majorTickUnit="1.0" max="15.0" min="5.0" minorTickCount="1" showTickLabels="true" snapToTicks="true" value="5.0" />
-            <Button fx:id="buttonAddRobot" layoutX="12.0" layoutY="33.0" mnemonicParsing="false" text="+"><font><Font size="14.0" /></font></Button>
-            <Button fx:id="buttonRemoveRobot" layoutX="42.0" layoutY="33.0" mnemonicParsing="false" text="-"><font><Font size="14.0" /></font></Button>
-            <Button fx:id="buttonAddShelf" layoutX="12.0" layoutY="70.0" mnemonicParsing="false" text="+"><font><Font size="14.0" /></font></Button>
-            <Button fx:id="buttonRemoveShelf" layoutX="42.0" layoutY="70.0" mnemonicParsing="false" text="-"><font><Font size="14.0" /></font></Button>
-            <Button fx:id="buttonAddPacker" layoutX="12.0" layoutY="106.0" mnemonicParsing="false" text="+"><font><Font size="14.0" /></font></Button>
-            <Button fx:id="buttonRemovePacker" layoutX="42.0" layoutY="106.0" mnemonicParsing="false" text="-"><font><Font size="14.0" /></font></Button>
-         </children>
-      </AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <children>
-            <Pane fx:id="floorContainerTemp" layoutX="93.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0">  
-            	<Floor fx:id="floor" width="5" height = "5" />
-            </Pane>
-         </children></AnchorPane>
-  </items>
-</SplitPane>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Import Simulation" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="View">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <SplitPane dividerPositions="0.35" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="860.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="237.0">
+               <children>
+                  <Label layoutX="154.0" layoutY="36.0" style="-fx-border-style: solid;" text="Robot" />
+                  <Label layoutX="106.0" layoutY="73.0" style="-fx-border-style: solid;" text="Storage Shelf" />
+                  <Label layoutX="92.0" layoutY="109.0" style="-fx-border-style: solid;" text="Packing Station" />
+                  <Label layoutX="24.0" layoutY="150.0" style="-fx-border-style: solid;" text="Import" />
+                  <Label layoutX="91.0" layoutY="150.0" style="-fx-border-style: solid;" text="Export" />
+                  <Label layoutX="24.0" layoutY="205.0" style="-fx-border-style: solid;" text="Width" />
+                  <Label layoutX="22.0" layoutY="293.0" style="-fx-border-style: solid;" text="Height" />
+                  <Slider fx:id="sliderWidth" blockIncrement="1.0" layoutX="33.0" layoutY="242.0" majorTickUnit="1.0" max="15.0" min="5.0" minorTickCount="1" showTickLabels="true" snapToTicks="true" value="5.0" />
+                  <Slider fx:id="sliderHeight" blockIncrement="1.0" layoutX="33.0" layoutY="334.0" majorTickUnit="1.0" max="15.0" min="5.0" minorTickCount="1" showTickLabels="true" snapToTicks="true" value="5.0" />
+                  <Button fx:id="buttonAddRobot" layoutX="12.0" layoutY="33.0" mnemonicParsing="false" text="+">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonRemoveRobot" layoutX="42.0" layoutY="33.0" mnemonicParsing="false" text="-">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonAddShelf" layoutX="12.0" layoutY="70.0" mnemonicParsing="false" text="+">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonRemoveShelf" layoutX="42.0" layoutY="70.0" mnemonicParsing="false" text="-">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonAddPacker" layoutX="12.0" layoutY="106.0" mnemonicParsing="false" text="+">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonRemovePacker" layoutX="42.0" layoutY="106.0" mnemonicParsing="false" text="-">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="563.0" prefWidth="643.0">
+               <children>
+                  <Pane fx:id="floorContainerTemp" layoutX="93.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0" > <Floor fx:id="floor" width="5" height = "5" /> </Pane>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</VBox>

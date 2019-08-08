@@ -22,7 +22,7 @@ public class MainTest extends Application {
 			loader.setLocation(getClass().getResource("WarehouseSimulation.fxml"));
 			final Parent root = loader.load();
 
-			final Scene scene = new Scene(root, 860, 600);
+			final Scene scene = new Scene(root);
 			// Move file to resources
 			scene.getStylesheets().add("stylesheet.css");
 			primaryStage.setTitle("Warehouse");
