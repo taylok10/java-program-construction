@@ -1,0 +1,12 @@
+.storage-shelf-cell {
+	-fx-background-color: #609682;
+}
+
+.charging-pod-cell {
+	-fx-background-color: #d1ca00;
+	-fx-content-display: center;
+}
+
+.packing-station-cell {
+	-fx-background-color: #b00e67;
+}

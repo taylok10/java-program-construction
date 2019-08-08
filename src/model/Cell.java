@@ -37,7 +37,7 @@ public class Cell extends Button implements GridLocation {
      * @return Added actor successfully
      */
     public boolean addActor(Actor actor) {
-		if (getActorTypes().isEmpty() || (actor.getClass().getSimpleName().equals("Robot")) && !getActorTypes().contains("Robot")) {
+		if (getActorTypes().isEmpty() || (actor.getClass().getSimpleName().equals("Robot")) && (getActorTypes().equals("ChargingPod")) ) {
 			actors.add(actor);
 			return true;
 		}
@@ -92,13 +92,18 @@ public class Cell extends Button implements GridLocation {
 	}
 	
     /**
+     * Temporary test class for Cell checks
+     * 
      * @return String description of Actors in cell
      */
 	public String getActorsDesc() {
-		String output = "Actors Present:\n";		
-		for (Actor actor: actors) {
-			output += actor.getUID() + "\n";
-		}		
+		String output = "";
+		if (!actors.isEmpty()) {
+			output = "Actors Present:\n";		
+			for (Actor actor: actors) {
+				output += actor.getUID() + "\n";
+			}
+		}
 		return output;
 	}
 	
@@ -106,30 +111,30 @@ public class Cell extends Button implements GridLocation {
 	 * Refreshes all Cell graphics when called
 	 */
 	public void refreshGraphics() {
-		if (getActorTypes().contains("Robot")) {
-//            this.setGraphic(new ImageView(new Image("Robot.png")));
-			this.setText("R");
-		}
-		else {
-//            this.setGraphic(new ImageView());
-			this.setText("");
-		}
-		
-		if (!actors.isEmpty()) {
-			switch(actors.get(0).getClass().getSimpleName()) {
-			case "PackingStation":
+		String check = getActorTypes();
+		System.out.println(check);
+		if (!check.equals("") || check.equals("Robot")) {
+			if(check.contains("PackingStation")) {
 				this.getStyleClass().add("packing-station-cell");
-				break;
-			case "StorageShelf":
-				this.getStyleClass().add("storage-shelf-cell");
-				break;
-			case "ChargingPod":
+			} else if(check.contains("ChargingPod")) {
 				this.getStyleClass().add("charging-pod-cell");
-				break;				
-			}			
+			} else if(check.contains("StorageShelf")) {
+				this.getStyleClass().add("storage-shelf-cell");
+			} else {
+				this.getStyleClass().clear();
+				this.getStyleClass().addAll(btnStyle);
+			}
+			
+			if(check.contains("Robot")) {
+				this.setText("R");
+			} else {
+				this.setText("");
+			}
+			
 		} else {
 			this.getStyleClass().clear();
 			this.getStyleClass().addAll(btnStyle);
+			this.setText("");
 		}
 	}
 }

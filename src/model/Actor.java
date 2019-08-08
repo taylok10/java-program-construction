@@ -19,7 +19,6 @@ public abstract class Actor {
 	private static final AtomicInteger count = new AtomicInteger(0); 
 	private final String UID;
 	private int[] position;
-	private Image image;
 	
 	public Actor(int x, int y) {
 		switch (this.getClass().getName()) {
@@ -41,21 +40,12 @@ public abstract class Actor {
 		}
 		
 		position = new int[]{x,y};
-		
-		String location = "";
-		String filename = this.getClass().getSimpleName() + ".png";
-		System.out.println(location + filename);
-		this.image = new Image(location + filename);
 	}
 	
 	public abstract void act();
 	
 	public int[] getPosition(){
 		return position;
-	}
-	
-	public Image getImage() {
-		return image;
 	}
 	
 	public String getUID() {
