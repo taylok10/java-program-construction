@@ -3,6 +3,8 @@
  */
 package model;
 
+import java.util.List;
+
 /**
  * @author kelly.taylor
  *
@@ -10,6 +12,7 @@ package model;
 public class Cell {
 	private int row;
 	private int column;
+	private List<Actor> actors;
 	
     /**
      * Represents a cell on on grid
@@ -20,6 +23,14 @@ public class Cell {
     {
         this.row = row;
         this.column = column;
+    }
+    
+    /**
+     * @param actor The actor to add to the cell
+     * @return Added actor successfully
+     */
+    public boolean addActor(Actor actor) {
+    	return actors.add(actor);
     }
 	
     /**
