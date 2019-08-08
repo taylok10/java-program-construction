@@ -3,8 +3,6 @@
  */
 package model;
 
-import java.util.AbstractQueue;
-
 /**
  * @author kelly.taylor
  *
@@ -16,5 +14,5 @@ public interface PathFinder {
      * @param targetLocation Where do we need to end
      * @return the found path, null if none found
      */
-	AbstractQueue<Cell> findPath(Cell startLocation, Cell targetLocation);
+	LinearNode<Cell> findPath(Cell startLocation, Cell targetLocation);
 }
