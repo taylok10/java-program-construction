@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
  * @author kelly.taylor
  *
  */
-public class Cell extends Button {
+public class Cell extends Button implements GridLocation {
 	private int row, column;
 	private List<Actor> actors;
 	private static ObservableList<String> btnStyle;

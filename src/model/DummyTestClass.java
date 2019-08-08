@@ -12,7 +12,7 @@ public class DummyTestClass {
             { new Cell(5,0),new Cell(5,1),new Cell(5,2),new Cell(5,3),new Cell(5,4),new Cell(5,5) }
         };
 		
-		BFS test = new BFS(Grid);
+		BFS<Cell> test = new BFS<Cell>(Grid);
 		Cell startLocation = Grid[5][2];
 		Cell endLocation = Grid[0][4];
 		LinearNode<Cell> result = test.findPath(startLocation, endLocation);

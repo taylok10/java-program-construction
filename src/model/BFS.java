@@ -10,46 +10,46 @@ import java.util.Queue;
  * @author kelly.taylor
  *
  */
-public class BFS implements PathFinder {
-	private Cell[][] grid;
-	private Queue<LinearNode<Cell>> tree;
+public class BFS<T extends GridLocation> implements PathFinder<T> {
+	private T[][] grid;
+	private Queue<LinearNode<T>> tree;
 	
-	public BFS(Cell[][] gridCells) {
-		this.grid = gridCells;
+	public BFS(T[][] grid) {
+		this.grid = grid;
 	}
 	
 	/* (non-Javadoc)
 	 * @see model.PathFinder#findPath(model.Cell, model.Cell)
 	 */
 	@Override
-	public LinearNode<Cell> findPath(Cell startLocation, Cell targetLocation) {
-        tree = new LinkedList<LinearNode<Cell>>();
+	public LinearNode<T> findPath(T startLocation, T targetLocation) {
+        tree = new LinkedList<LinearNode<T>>();
         //Start at the target location so we can navigate the LinearNodes from start to finish
-        LinearNode<Cell> initialNode = new LinearNode<Cell>(targetLocation);
+        LinearNode<T> initialNode = new LinearNode<T>(targetLocation);
         tree.add(initialNode);
         
-        LinearNode<Cell> path = searchNodes(startLocation);
+        LinearNode<T> path = searchNodes(startLocation);
         return path;
 	}
 	
-	private void tryMove(LinearNode<Cell> node, int x, int y) {
+	private void tryMove(LinearNode<T> node, int x, int y) {
 		boolean yIsValid = y >= 0 && y < grid.length;
 		if(yIsValid) {
 			boolean xIsValid = x >= 0 && x < grid[y].length;
 			if(xIsValid) {
 	        	// Obstacle check can occur here if needed
-	        	LinearNode<Cell> element = new LinearNode<Cell>(grid[y][x]);
+	        	LinearNode<T> element = new LinearNode<T>(grid[y][x]);
 	        	element.setNext(node);
 	        	tree.add(element);
 			}
 		}
 	}
 
-    private LinearNode<Cell> searchNodes(Cell endLocation)
+    private LinearNode<T> searchNodes(T endLocation)
     {
         while (!tree.isEmpty())
         {
-        	LinearNode<Cell> node = tree.remove();
+        	LinearNode<T> node = tree.remove();
         	if(node.getElement() == endLocation) {
         		// We've reached the target. Send this path back.
         		return node;
