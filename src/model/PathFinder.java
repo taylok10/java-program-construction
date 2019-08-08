@@ -9,7 +9,7 @@ import java.util.AbstractQueue;
  * @author kelly.taylor
  *
  */
-public interface IPathFinder {
+public interface PathFinder {
     /**
      * Finds a path
      * @param startLocation Where should the path begin
