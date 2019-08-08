@@ -16,3 +16,12 @@ JPC Amazon Warehouse Simulation
   * Charge Per Tick
 * PathFinding
   * TBC
+* Simulation Import
+  * Read file
+  * Adjust Floor Dimensions
+  * Create Actors
+  * Allocate Actors to Cells
+  * Generate Orders
+
+## Testing TODO list
+ * TBC
