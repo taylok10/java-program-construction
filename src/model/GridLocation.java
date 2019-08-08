@@ -8,13 +8,17 @@ package model;
  *
  */
 public interface GridLocation {
-    /**
-     * @return The column location in the grid
-     */
+	/**
+	 * Gets the column location in the grid
+	 * 
+	 * @return Column position
+	 */
 	int getColumn();
-	
-    /**
-     * @return The row location in the grid
-     */
+
+	/**
+	 * Gets the row location in the grid
+	 * 
+	 * @return Row position
+	 */
 	int getRow();
 }
