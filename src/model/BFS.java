@@ -29,14 +29,14 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 	 * @see model.PathFinder#findPath(model.Cell, model.Cell)
 	 */
 	@Override
-	public LinearNode<T> findPath(T startLocation, T targetLocation) {
+	public PathLink<T> findPath(T startLocation, T targetLocation) {
 		tree = new LinkedList<LinearNode<T>>();
 		// Start at the target location so we can navigate the LinearNodes from start to
 		// finish
 		LinearNode<T> initialNode = new LinearNode<T>(targetLocation);
 		tree.add(initialNode);
 		LinearNode<T> path = searchNodes(startLocation);
-		return path;
+		return new PathLink<T>(path);
 	}
 
 	/**
