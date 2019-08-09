@@ -23,16 +23,16 @@ public abstract class Actor {
 	public Actor(int x, int y) {
 		switch (this.getClass().getName()) {
 		case "model.ChargingPod":
-			this.UID = "CHPID" + countC.incrementAndGet();
+			this.UID = "c" + countC.incrementAndGet();
 			break;
 		case "model.StorageShelf":
-			this.UID = "SSFID" + countS.incrementAndGet();
+			this.UID = "ss" + countS.incrementAndGet();
 			break;
 		case "model.Robot":
-			this.UID = "RBTID" + countR.incrementAndGet();
+			this.UID = "r" + countR.incrementAndGet();
 			break;
 		case "model.PackingStation":
-			this.UID = "PCKID" + countP.incrementAndGet();
+			this.UID = "ps" + countP.incrementAndGet();
 			break;	
 		default:
 			this.UID = "???ID" + count.incrementAndGet();
