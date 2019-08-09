@@ -1,9 +1,12 @@
 package model;
 
 public class StorageShelf extends Actor {
+	private static final String identifier = "S";
+	private static int id = 0;
 	
 	public StorageShelf(int x, int y) {
-		super(x,y);
+		super(x,y, identifier + id);
+		id++;
 	}
 
 	@Override

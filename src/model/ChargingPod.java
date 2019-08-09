@@ -1,9 +1,12 @@
 package model;
 
 public class ChargingPod extends Actor {
+	private static final String identifier = "C";
+	private static int id = 0;
 
 	public ChargingPod(int x, int y) {
-		super(x,y);
+		super(x,y, identifier + id);
+		id++;
 	}
 	
 	@Override

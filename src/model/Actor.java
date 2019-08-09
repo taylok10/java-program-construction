@@ -3,42 +3,16 @@
  */
 package model;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javafx.scene.image.Image;
-
 /**
  * @author kelly.taylor
  *
  */
 public abstract class Actor {
-	private static final AtomicInteger countC = new AtomicInteger(0);
-	private static final AtomicInteger countS = new AtomicInteger(0); 
-	private static final AtomicInteger countR = new AtomicInteger(0);
-	private static final AtomicInteger countP = new AtomicInteger(0); 
-	private static final AtomicInteger count = new AtomicInteger(0); 
 	private final String UID;
 	private int[] position;
 	
-	public Actor(int x, int y) {
-		switch (this.getClass().getName()) {
-		case "model.ChargingPod":
-			this.UID = "C" + countC.incrementAndGet();
-			break;
-		case "model.StorageShelf":
-			this.UID = "S" + countS.incrementAndGet();
-			break;
-		case "model.Robot":
-			this.UID = "R" + countR.incrementAndGet();
-			break;
-		case "model.PackingStation":
-			this.UID = "P" + countP.incrementAndGet();
-			break;	
-		default:
-			this.UID = "???ID" + count.incrementAndGet();
-			break;
-		}
-		
+	public Actor(int x, int y, String UID) {	
+		this.UID = UID;
 		position = new int[]{x,y};
 	}
 	
