@@ -5,6 +5,8 @@ JPC Amazon Warehouse Simulation
 
 * Upadte UML
 * Start Group Report
+* Address Design TODOs in the following classes:
+  Order
 
 ## Development TODO list
 
@@ -24,4 +26,4 @@ JPC Amazon Warehouse Simulation
   * Generate Orders
 
 ## Testing TODO list
- * TBC
+ * jUnit testing for all model classes
