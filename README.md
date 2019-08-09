@@ -17,7 +17,7 @@ JPC Amazon Warehouse Simulation
   * Max Battery
   * Charge Per Tick
 * PathFinding
-  * TBC
+  * Finish research into cooperative pathfinding. (This should be considered a bonus)
 * Simulation Import
   * Read file
   * Adjust Floor Dimensions
@@ -28,3 +28,5 @@ JPC Amazon Warehouse Simulation
 ## Testing TODO list
  * jUnit testing for all model classes
  * PackingStationTest needs to unit test act()
+ * RobotTest needs additional unit tests
+ * ChargingPod needs to unit test act()
