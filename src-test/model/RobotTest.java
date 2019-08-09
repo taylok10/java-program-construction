@@ -24,14 +24,14 @@ public class RobotTest {
 
 	@Test
 	public void testUIDFormat() {
-		assertTrue(one.getUID().matches("^r[0-9]+$"));
+		assertTrue(one.getUID().matches("^R[0-9]+$"));
 	}
 
 	@Test
-	public void testNewPackingStationIncrementsUID() {
-		int currentUID = Integer.parseInt(one.getUID().replaceFirst("r", ""));
+	public void testNewRobotIncrementsUID() {
+		int currentUID = Integer.parseInt(one.getUID().replaceFirst("R", ""));
 		Robot two = new Robot(0, 1);
-		assertEquals("r" + ++currentUID, two.getUID());
+		assertEquals("R" + ++currentUID, two.getUID());
 	}
 
 	@Test
