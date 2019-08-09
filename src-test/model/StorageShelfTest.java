@@ -5,6 +5,7 @@ package model;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,10 +23,15 @@ public class StorageShelfTest {
 	}
 
 	@Test
+	public void testUIDFormat() {
+		assertTrue(one.getUID().matches("^ss[0-9]+$"));
+	}
+
+	@Test
 	public void testNewStorageShelfIncrementsUID() {
-		assertEquals("ss0", one.getUID());
+		int currentUID = Integer.parseInt(one.getUID().replaceFirst("ss", ""));
 		StorageShelf two = new StorageShelf(0, 1);
-		assertEquals("ss1", two.getUID());
+		assertEquals("ss" + ++currentUID, two.getUID());
 	}
 
 	@Test
