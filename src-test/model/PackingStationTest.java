@@ -24,14 +24,14 @@ public class PackingStationTest {
 
 	@Test
 	public void testUIDFormat() {
-		assertTrue(one.getUID().matches("^ss[0-9]+$"));
+		assertTrue(one.getUID().matches("^ps[0-9]+$"));
 	}
 
 	@Test
 	public void testNewPackingStationIncrementsUID() {
-		int currentUID = Integer.parseInt(one.getUID().replaceFirst("ss", ""));
+		int currentUID = Integer.parseInt(one.getUID().replaceFirst("ps", ""));
 		PackingStation two = new PackingStation(0, 1);
-		assertEquals("ss" + ++currentUID, two.getUID());
+		assertEquals("ps" + ++currentUID, two.getUID());
 	}
 
 	@Test
