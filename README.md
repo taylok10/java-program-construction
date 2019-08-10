@@ -12,17 +12,17 @@ JPC Amazon Warehouse Simulation
 
 * GUI
   * File, Tools, Help Menu
-  * Import Simulation
+  * ~~Import Simulation~~
   * Report View
   * Max Battery
   * Charge Per Tick
 * PathFinding
   * Finish research into cooperative pathfinding. (This should be considered a bonus)
 * Simulation Import
-  * Read file
-  * Adjust Floor Dimensions
-  * Create Actors
-  * Allocate Actors to Cells
+  * ~~Read file~~
+  * ~~Adjust Floor Dimensions~~
+  * ~~Create Actors~~
+  * ~~Allocate Actors to Cells~~
   * Generate Orders
 
 ## Testing TODO list
