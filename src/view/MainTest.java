@@ -1,5 +1,9 @@
 package view;
 
+import java.io.File;
+import java.util.Map;
+import java.util.Queue;
+
 import controller.WarehouseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,18 +11,28 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.DataRegistry;
 import model.Floor;
+import model.Order;
+import model.WarehouseSimulation;
 
 public class MainTest extends Application {
 	public static Stage stage;
 	public static Scene scene;
-	private static Floor floor;
+	private static WarehouseSimulation ws;
 
+	private static Queue<Order> orders;
+	private static Map<Order, Integer> orderStats;
+	private static DataRegistry dr;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			dr = new DataRegistry(this);
+			orders = null;
+			orderStats = null;
 			final FXMLLoader loader = new FXMLLoader();
-			loader.setController(new WarehouseController());
+			loader.setController(new WarehouseController(this));
 			loader.setLocation(getClass().getResource("WarehouseSimulation.fxml"));
 			final Parent root = loader.load();
 
@@ -32,26 +46,13 @@ public class MainTest extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-/*	@Override
-	public void start(Stage arg0) throws Exception {
-		arg0.setTitle("Chess Game");
-
-        BorderPane root = new BorderPane();
-        Scene mainScene = new Scene(root);
-        arg0.setScene(mainScene);
-
-
-        // draw chessboard
-        floor = new Floor(5,5);
-        floor.setGridLinesVisible(true);
-        root.setCenter(floor); // sized 400x400
-		arg0.show();
-	}
-*/
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public void loadImport(File file) {
+		dr.loadImport(file);
 	}
 	
 }
