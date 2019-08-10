@@ -46,7 +46,6 @@ public class Floor extends GridPane {
 		for(int i = 0; i < width; i++) {
 	        for(int j = 0; j < height; j++) {
 	        	Cell nCell = new Cell(i,j);
-				// C1.1 
 	        	nCell.setPrefSize(400/width, 400/height);
 	        	nCell.setOnMouseClicked(e -> {
 	        		WarehouseController.setUserCell(nCell);

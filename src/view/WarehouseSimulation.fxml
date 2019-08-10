@@ -79,7 +79,7 @@
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="563.0" prefWidth="643.0">
                <children>
-                  <Pane fx:id="floorContainerTemp" layoutX="93.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0" > <Floor fx:id="floor" width="5" height = "5" /> </Pane>
+                  <Pane fx:id="floorContainerTemp" layoutX="93.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0"> <Floor fx:id="floor" width="5" height = "5" /> </Pane>
                </children>
             </AnchorPane>
          </items>

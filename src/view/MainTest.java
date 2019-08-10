@@ -37,7 +37,6 @@ public class MainTest extends Application {
 			final Parent root = loader.load();
 
 			final Scene scene = new Scene(root);
-			// Move file to resources
 			scene.getStylesheets().add("stylesheet.css");
 			primaryStage.setTitle("Warehouse");
 			primaryStage.setScene(scene);

@@ -112,12 +112,10 @@ public class WarehouseController {
 	}
 	
 	@FXML public void updateWidth() {
-		//TESTING Check update is correct
 		System.out.println(sliderWidth.getValue());
 	}
 	
 	@FXML public void updateHeight() {
-		//TESTING Check update is correct
 		System.out.println(sliderHeight.getValue());
 	}
 

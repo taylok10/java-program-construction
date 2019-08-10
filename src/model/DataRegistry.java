@@ -56,10 +56,8 @@ public class DataRegistry {
 		    	System.out.println("Invalid simulation format");
 		    }
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
