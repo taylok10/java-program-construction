@@ -15,5 +15,5 @@ public interface PathFinder<T extends GridLocation> {
 	 * @param targetLocation Where do we need to end
 	 * @return the found path, null if none found
 	 */
-	LinearNode<T> findPath(T startLocation, T targetLocation);
+	PathLink<T> findPath(T startLocation, T targetLocation);
 }
