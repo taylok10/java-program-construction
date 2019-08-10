@@ -61,7 +61,6 @@ public class WarehouseController {
 				int y = userCell.getRow();
 				floor.addActor(new ChargingPod(x,y),x,y);
 				floor.addActor(new Robot(x,y),x,y);
-				userCell.refreshGraphics();
 			}
 		});
 		
@@ -70,7 +69,6 @@ public class WarehouseController {
 			public void handle(ActionEvent e) {
 				floor.removeActor("ChargingPod",userX,userY);
 				floor.removeActor("Robot",userX, userY);
-				userCell.refreshGraphics();
 			}
 		});
 		
@@ -80,7 +78,6 @@ public class WarehouseController {
 				int x = userCell.getColumn();
 				int y = userCell.getRow();
 				floor.addActor(new StorageShelf(x,y),x,y);
-				userCell.refreshGraphics();
 			}
 		});
 		
@@ -88,7 +85,6 @@ public class WarehouseController {
 			@Override
 			public void handle(ActionEvent e) {
 				floor.removeActor("StorageShelf",userX, userY);
-				userCell.refreshGraphics();
 			}
 		});
 		
@@ -98,7 +94,6 @@ public class WarehouseController {
 				int x = userCell.getColumn();
 				int y = userCell.getRow();
 				floor.addActor(new PackingStation(x,y),x,y);
-				userCell.refreshGraphics();
 			}
 		});
 		
@@ -106,7 +101,6 @@ public class WarehouseController {
 			@Override
 			public void handle(ActionEvent e) {
 				floor.removeActor("PackingStation",userX, userY);
-				userCell.refreshGraphics();
 			}
 		});
 	}
@@ -140,6 +134,10 @@ public class WarehouseController {
 		} else {
 			System.out.println("Invalid File Selected");
 		}
+	}
+	
+	public Floor getFloor() {
+		return floor;
 	}
 	
 	

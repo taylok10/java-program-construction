@@ -23,7 +23,7 @@ public class Cell extends Button implements GridLocation {
      * @param row The row index
      * @param column The column index
      */
-    public Cell(int row, int column)
+    public Cell(int column, int row)
     {
     	// List type up for debate
     	actors = new ArrayList<Actor>();
@@ -39,6 +39,7 @@ public class Cell extends Button implements GridLocation {
     public boolean addActor(Actor actor) {
 		if (getActorTypes().isEmpty() || (actor.getClass().getSimpleName().equals("Robot")) && (getActorTypes().equals("ChargingPod")) ) {
 			actors.add(actor);
+			refreshGraphics();
 			return true;
 		}
 		System.out.println("ERROR - Cannot add " + actor.getClass().getSimpleName() + " to cell " + column + "," + row);
@@ -60,8 +61,10 @@ public class Cell extends Button implements GridLocation {
 		}
 		if (toRemove != null) {
 			actors.remove(toRemove);
+			refreshGraphics();
 			return true;
 		}
+		refreshGraphics();
 		return false;
 	}
 	
@@ -107,6 +110,28 @@ public class Cell extends Button implements GridLocation {
 		return output;
 	}
 	
+	public void refreshStyle() {
+		List<String> toRemove = new ArrayList<String>();
+		
+		for (String s : getStyleClass()) {
+			switch(s) {
+			case "packing-station-cell":
+				toRemove.add(s);
+				break;
+			case "charging-pod-cell":
+				toRemove.add(s);
+				break;
+			case "storage-shelf-cell":
+				toRemove.add(s);
+				break;
+			}
+		}
+		
+		for (String remove : toRemove) {
+			getStyleClass().remove(remove);
+		}
+	}
+	
 	/**
 	 * Refreshes all Cell graphics when called
 	 */
@@ -121,8 +146,7 @@ public class Cell extends Button implements GridLocation {
 			} else if(check.contains("StorageShelf")) {
 				this.getStyleClass().add("storage-shelf-cell");
 			} else {
-				this.getStyleClass().clear();
-				this.getStyleClass().addAll(btnStyle);
+				refreshStyle();
 			}
 			
 			if(check.contains("Robot")) {
@@ -132,8 +156,7 @@ public class Cell extends Button implements GridLocation {
 			}
 			
 		} else {
-			this.getStyleClass().clear();
-			this.getStyleClass().addAll(btnStyle);
+			refreshStyle();
 			this.setText("");
 		}
 	}

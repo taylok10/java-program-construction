@@ -1,7 +1,7 @@
 package model;
 
 public class Robot extends Actor {
-	private static final String identifier = "R";
+	private static final String identifier = "r";
 	private static int id = 0;
 
 	private ChargingPod chargingPod;
