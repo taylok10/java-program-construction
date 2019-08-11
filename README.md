@@ -24,6 +24,8 @@ JPC Amazon Warehouse Simulation
   * ~~Create Actors~~
   * ~~Allocate Actors to Cells~~
   * Generate Orders
+* MVC Architecture
+  * Cell needs to not extend Button
 
 ## Testing TODO list
  * jUnit testing for all model classes
