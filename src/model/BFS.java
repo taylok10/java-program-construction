@@ -3,6 +3,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,6 +14,7 @@ import java.util.Queue;
 public class BFS<T extends GridLocation> implements PathFinder<T> {
 	private T[][] grid;
 	private Queue<LinearNode<T>> tree;
+	private ArrayList<T> visitedLocations;
 
 	/**
 	 * Will create a new BFS object
@@ -31,12 +33,22 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 	@Override
 	public PathLink<T> findPath(T startLocation, T targetLocation) {
 		tree = new LinkedList<LinearNode<T>>();
+		visitedLocations = new ArrayList<T>();
 		// Start at the target location so we can navigate the LinearNodes from start to
 		// finish
 		LinearNode<T> initialNode = new LinearNode<T>(targetLocation);
 		tree.add(initialNode);
-		LinearNode<T> path = searchNodes(startLocation);
-		return new PathLink<T>(path);
+		return searchNodes(startLocation);
+	}
+
+	/**
+	 * Confirms if the location has previously been visited
+	 * 
+	 * @param location What is the location to check
+	 * @return if we have previously visited this location
+	 */
+	private boolean hasLocationBeenVisited(T location) {
+		return visitedLocations.contains(location);
 	}
 
 	/**
@@ -52,11 +64,15 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 		if (yIsValid) {
 			boolean xIsValid = x >= 0 && x < grid[y].length;
 			if (xIsValid) {
-				// Obstacle check can occur here if needed
-				LinearNode<T> element = new LinearNode<T>(grid[y][x]);
-				element.setNext(node);
-				tree.add(element);
-				return true;
+				T location = grid[y][x]; // Location is valid
+				if (!hasLocationBeenVisited(location) && !location.isBlocked()) {
+					// Location has not been reached quicker and is available - move here
+					LinearNode<T> element = new LinearNode<T>(location);
+					element.setNext(node);
+					tree.add(element);
+					visitedLocations.add(location);
+					return true;
+				}
 			}
 		}
 		return false;
@@ -68,12 +84,14 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 	 * @param endLocation Where do we need to end
 	 * @return the found path, null if none found
 	 */
-	private LinearNode<T> searchNodes(T endLocation) {
+	private PathLink<T> searchNodes(T endLocation) {
 		while (!tree.isEmpty()) {
 			LinearNode<T> node = tree.remove();
 			if (node.getElement() == endLocation) {
-				// We've reached the target. Send this path back.
-				return node;
+				// We've reached the target. This is the quickest path.
+				PathLink<T> path = new PathLink<T>(node);
+				path.takeStep(); // Remove starting position from path
+				return path;
 			}
 			int x = node.getElement().getColumn();
 			int y = node.getElement().getRow();

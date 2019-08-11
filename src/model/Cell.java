@@ -160,4 +160,9 @@ public class Cell extends Button implements GridLocation {
 			this.setText("");
 		}
 	}
+
+	@Override
+	public boolean isBlocked() {
+		return getActorTypes().contains("Robot");
+	}
 }

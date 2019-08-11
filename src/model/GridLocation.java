@@ -21,4 +21,11 @@ public interface GridLocation {
 	 * @return Row position
 	 */
 	int getRow();
+	
+	/**
+	 * Gets if location is blocked
+	 * 
+	 * @return If the location is currently blocked
+	 */
+	boolean isBlocked();
 }
