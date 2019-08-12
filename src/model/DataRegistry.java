@@ -8,15 +8,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import view.MainTest;
+import view.Main;
 
 public class DataRegistry {
 	
-	private MainTest simulation;
+	private Main simulation;
 	private Floor floor;
 	private Map<String,StorageShelf> shelves;
 
-	public DataRegistry(MainTest simulation) {
+	public DataRegistry(Main simulation) {
 		this.simulation = simulation;
 		floor = simulation.getWarehouseController().getFloor();
 		shelves = new HashMap<String,StorageShelf>();
@@ -56,7 +56,7 @@ public class DataRegistry {
 			    		break;
 			    	case "station":
 			    		System.out.println("Packing Station ID = " + lineArr[1] + " X-Coordinate " + lineArr[2] + " Y-Coordinate " + lineArr[3]);
-						floor.addActor(new PackingStation(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3])),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
+						floor.addActor(new PackingStation(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]), null),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 			    		break;
 			    	case "order":
 			    		System.out.println("Packing Ticks = " + lineArr[1]);

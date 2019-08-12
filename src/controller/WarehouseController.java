@@ -19,7 +19,7 @@ import model.PackingStation;
 import model.Robot;
 import model.StorageShelf;
 import model.WarehouseSimulation;
-import view.MainTest;
+import view.Main;
 
 public class WarehouseController {
 	@FXML Slider sliderWidth, sliderHeight;
@@ -27,16 +27,17 @@ public class WarehouseController {
 	@FXML Button buttonAddRobot, buttonRemoveRobot, buttonAddShelf, buttonRemoveShelf, buttonAddPacker, buttonRemovePacker;
 	@FXML MenuItem menuItemImport;
 	
-	private MainTest mt;
+	private Main mt;
 	private static Cell userCell;
 	private static int userX, userY;
-	private WarehouseSimulation warehouseSimulation = new WarehouseSimulation();
+	private WarehouseSimulation warehouseSimulation;
 	
-	public WarehouseController(MainTest mt) {
+	public WarehouseController(Main mt) {
 		this.mt = mt;
 		userCell = null;
 		userX = 0;
 		userY = 0;
+		warehouseSimulation = mt.getWarehouseSimulation();
 	}
 	
 	@FXML public void initialize() {

@@ -17,7 +17,7 @@ import model.Floor;
 import model.Order;
 import model.WarehouseSimulation;
 
-public class MainTest extends Application {
+public class Main extends Application {
 	public static Stage stage;
 	public static Scene scene;
 	private static WarehouseSimulation ws;
@@ -30,6 +30,7 @@ public class MainTest extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			ws = new WarehouseSimulation();
 			wc = new WarehouseController(this);
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setController(wc);
@@ -42,7 +43,8 @@ public class MainTest extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			dr = new DataRegistry(this);
+			ws.setFloor(wc.getFloor());
+//			dr = new DataRegistry(this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,7 +56,8 @@ public class MainTest extends Application {
 	}
 	
 	public void loadImport(File file) {
-		dr.loadImport(file);
+//		dr.loadImport(file);
+		ws.readSimulation(file);
 	}
 	
 	public WarehouseController getWarehouseController() {
@@ -70,6 +73,9 @@ public class MainTest extends Application {
 		System.out.println(orders.size());
 	}
 	
+	public WarehouseSimulation getWarehouseSimulation() {
+		return ws;
+	}
 	
 	
 }

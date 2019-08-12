@@ -115,4 +115,12 @@ public class Floor extends GridPane {
 		return cellList;
 	}
 	
+	public int getRows() {
+		return height;
+	}
+	
+	public int getColumns() {
+		return width;
+	}
+	
 }
