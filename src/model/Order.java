@@ -34,6 +34,7 @@ public class Order {
 	 * @param shelf The item to add to the order
 	 */
 	public void addItem(StorageShelf shelf) {
+//		System.out.println(shelf.getUID());
 		if (outstandingItems.contains(new OrderItem(shelf, 0))) {
 			int index = outstandingItems.indexOf(new OrderItem(shelf, 0));
 			outstandingItems.get(index).incrementQty();

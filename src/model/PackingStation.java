@@ -122,4 +122,9 @@ public class PackingStation extends Actor {
 	private void packOrder() {
 		currentOrder.decrementTicksToPack();
 	}
+
+	public static void resetIdCount() {
+		id = 0;		
+	}
+	
 }

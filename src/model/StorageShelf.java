@@ -13,4 +13,8 @@ public class StorageShelf extends Actor {
 	public void act() {
 		//Do Nothing. StorageShelf is a passive marker.
 	}
+
+	public static void resetIdCount() {
+		id = 0;		
+	}
 }

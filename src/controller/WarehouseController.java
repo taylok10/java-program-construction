@@ -9,7 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.Cell;
+import model.ChargingPod;
 import model.Floor;
+import model.PackingStation;
+import model.StorageShelf;
 import model.WarehouseSimulation;
 import view.Main;
 
@@ -96,5 +99,11 @@ public class WarehouseController {
 		return floor;
 	}
 	
+	public void resetIds() {
+		ChargingPod.resetIdCount();
+		PackingStation.resetIdCount();
+		StorageShelf.resetIdCount();
+		Robot.resetIdCount();
+	}
 	
 }

@@ -11,8 +11,13 @@ import java.util.LinkedList;
  *
  */
 public class OrderManager {
-	private LinkedList<Order> orders = new LinkedList<Order>();
-	private ArrayList<Order> dispatchedOrders = new ArrayList<Order>();
+	private LinkedList<Order> orders;
+	private ArrayList<Order> dispatchedOrders;
+	
+	public OrderManager() {
+		orders = new LinkedList<Order>();
+		dispatchedOrders = new ArrayList<Order>();
+	}
 	
 	public boolean dispatchOrder(Order order) {
 		return dispatchedOrders.add(order);

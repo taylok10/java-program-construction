@@ -32,7 +32,8 @@ public class WarehouseSimulation extends Simulation {
 	
 	public void readSimulation(File file) {
 		orders.empty();
-		shelves = new HashMap<String,StorageShelf>();
+		shelves.clear();
+		wc.resetIds();
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 		    String line;
 		    if ((line = br.readLine()).equals("format 1")) {
@@ -59,6 +60,7 @@ public class WarehouseSimulation extends Simulation {
 			    		StorageShelf nShelf = new StorageShelf(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 						floor.addActor(nShelf,Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 						shelves.put(nShelf.getUID(),nShelf);
+						System.out.println(nShelf.getUID());
 			    		break;
 			    	case "station":
 			    		floor.addActor(new PackingStation(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]), orders, floor.getRobots()),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
@@ -66,6 +68,8 @@ public class WarehouseSimulation extends Simulation {
 			    	case "order":
 			    		StorageShelf[] orderShelves = new StorageShelf[lineArr.length-2];
 			    		for (int i = 2; i < lineArr.length; i++) {
+			    			System.out.println(lineArr[i]);
+			    			System.out.println(shelves.get(lineArr[i]).getUID());
 			    			orderShelves[i-2] = shelves.get(lineArr[i]);			    			
 			    		}
 			    		orders.addOrder(new Order(Integer.parseInt(lineArr[1]), orderShelves));

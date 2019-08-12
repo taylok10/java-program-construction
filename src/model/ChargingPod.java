@@ -14,4 +14,8 @@ public class ChargingPod extends Actor {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public static void resetIdCount() {
+		id = 0;		
+	}
 }
