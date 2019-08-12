@@ -14,7 +14,7 @@ public class LinearNode<T> {
 	/**
 	 * Creates a new LinearNode
 	 * 
-	 * @param The element of the LinearNode
+	 * @param element The element of the LinearNode
 	 */
 	public LinearNode(T element) {
 		next = null;

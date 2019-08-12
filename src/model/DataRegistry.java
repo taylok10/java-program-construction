@@ -56,7 +56,7 @@ public class DataRegistry {
 			    		break;
 			    	case "station":
 			    		System.out.println("Packing Station ID = " + lineArr[1] + " X-Coordinate " + lineArr[2] + " Y-Coordinate " + lineArr[3]);
-						floor.addActor(new PackingStation(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]), null),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
+						floor.addActor(new PackingStation(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]), simulation.getWarehouseSimulation().getOrderManager(), floor.getRobots()),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 			    		break;
 			    	case "order":
 			    		System.out.println("Packing Ticks = " + lineArr[1]);
@@ -64,7 +64,8 @@ public class DataRegistry {
 			    		for (int i = 2; i < lineArr.length; i++) {
 			    			orderShelves[i-2] = shelves.get(lineArr[i]);			    			
 			    		}
-			    		simulation.addOrder(new Order(orderShelves));
+			    		// NOTE FOR JOE: I have defaulted the ticks to pack to 0, please update this accordingly
+			    		simulation.addOrder(new Order(0, orderShelves));
 			    		break;
 			    	default:
 			    		System.out.println("Invalid format: " + lineArr[0]);

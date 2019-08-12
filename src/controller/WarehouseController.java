@@ -95,7 +95,7 @@ public class WarehouseController {
 			public void handle(ActionEvent e) {
 				int x = userCell.getColumn();
 				int y = userCell.getRow();
-				floor.addActor(new PackingStation(x,y, warehouseSimulation.getOrders()),x,y);
+				floor.addActor(new PackingStation(x,y, warehouseSimulation.getOrderManager(), floor.getRobots()),x,y);
 			}
 		});
 		

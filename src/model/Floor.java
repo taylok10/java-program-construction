@@ -25,6 +25,9 @@ public class Floor extends GridPane {
 	private Cell[][] cells;
 	private GridCell[][] gCells;
 	private static Cell userCell;
+	// We need to keep track of all the robots we have on this floor so other Actors can access them
+	// NOTE FOR JOE: Can you update this accordingly at all?
+	private ArrayList<Robot> robots;
 	
 	public Floor(@NamedArg("width") int width, @NamedArg("height") int height) {
 		super();
@@ -125,4 +128,7 @@ public class Floor extends GridPane {
 		return width;
 	}
 	
+	public ArrayList<Robot> getRobots(){
+		return robots;
+	}
 }

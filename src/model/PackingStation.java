@@ -1,40 +1,125 @@
 package model;
 
-import java.util.Queue;
+import java.util.List;
 
+/**
+ * @author kelly.taylor
+ *
+ */
 public class PackingStation extends Actor {
 	private static final String IDENTIFIER = "ps";
 	private static int id = 0;
 	private Order currentOrder;
-	private Queue<Order> orders;
+	private OrderItem itemInProgress;
+	private OrderManager orders;
+	private List<Robot> robots;
 
-	public PackingStation(int x, int y, Queue<Order> orders) {
+	/**
+	 * Creates a new PackingStation
+	 * 
+	 * @param x            The column coordiniate of this PackingStation
+	 * @param y            The row coordiniate of this PackingStation
+	 * @param orderManager The OrderManager of this PackingStation
+	 * @param robots       The robots this PackingStation has access to
+	 */
+	public PackingStation(int x, int y, OrderManager orderManager, List<Robot> robots) {
 		super(x, y, IDENTIFIER + id);
 		id++;
-		this.orders = orders;
+		orders = orderManager;
+		this.robots = robots;
 	}
 
-	public Order getCurrentOrder() {
-		return currentOrder;
+	/**
+	 * Accepts an incoming collection from a Robot
+	 * 
+	 * @return was the item accepted successfully. This will fail if the item is not
+	 *         for this PackingStation.
+	 */
+	public boolean acceptRobotDelivery(StorageShelf shelf) {
+		if (shelf == itemInProgress.getLocation()) {
+			currentOrder.processItem(itemInProgress);
+			itemInProgress = null;
+			return true;
+		}
+		return false;
 	}
 
-	private boolean hasOrder() {
-		return currentOrder != null;
-	}
-
-	private void takeOrder() {
-		currentOrder = orders.remove();
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see model.Actor#act()
+	 */
 	@Override
 	public void act() {
 		if (!hasOrder()) {
 			// If we don't currently have an order, take next one from the list
 			takeOrder();
 		} else {
-			// Ask Robot to bring items from the list
-			// Once has all items, takes x ticks packing (dependant on items)
-			// Dispatch for delivery
+			// Update time spent processing for reporting
+			currentOrder.incrementTimeProcessing();
+
+			if (!currentOrder.isComplete()) {
+				if (itemInProgress == null) {
+					requestRobot(currentOrder.getNextItem().getLocation());
+				}
+				// Robot is collecting item wait
+			} else if (!currentOrder.isPacked()) {
+				// Once has all items, takes x ticks packing
+				packOrder();
+			} else {
+				// Dispatch for delivery
+				dispatchForDelivery();
+			}
 		}
+	}
+
+	/**
+	 * Dispatch the current order for delivery
+	 */
+	private void dispatchForDelivery() {
+		orders.dispatchOrder(currentOrder);
+		currentOrder = null;
+	}
+
+	/**
+	 * Gets the current order of this PackingStation
+	 * 
+	 * @return the Order that is currently being handled by this PackingStation
+	 */
+	public Order getCurrentOrder() {
+		return currentOrder;
+	}
+
+	/**
+	 * Gets if this PackingStation currently has an order
+	 * 
+	 * @return if we have an order in progress
+	 */
+	private boolean hasOrder() {
+		return currentOrder != null;
+	}
+
+	/**
+	 * Takes a new order to process
+	 */
+	private void takeOrder() {
+		currentOrder = orders.getNextOrder();
+	}
+
+	private void requestRobot(StorageShelf shelf) {
+		for (Robot robot : robots) {
+			boolean accepted = robot.assignmentRequest(shelf);
+			if (accepted) {
+				// We have a robot, we can stop asking
+				return;
+			}
+		}
+	}
+
+	/**
+	 * Packs the current order
+	 */
+	private void packOrder() {
+		currentOrder.decrementTicksToPack();
 	}
 }
