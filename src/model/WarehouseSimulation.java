@@ -37,6 +37,7 @@ public class WarehouseSimulation extends Simulation {
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 		    String line;
 		    if ((line = br.readLine()).equals("format 1")) {
+		    	boolean runnable = false;
 			    while ((line = br.readLine()) != null) {
 			    	String[] lineArr = line.split(" ");
 			    	switch(lineArr[0]) {
@@ -53,23 +54,20 @@ public class WarehouseSimulation extends Simulation {
 			    		wc.setChargeSpeed(Integer.parseInt(lineArr[1]));
 			    		break;
 			    	case "podRobot":
-			    		floor.addActor(new ChargingPod(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
-						floor.addActor(new Robot(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
+			    		runnable = floor.addActor(new ChargingPod(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
+			    		runnable = floor.addActor(new Robot(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
 			    		break;
 			    	case "shelf":
 			    		StorageShelf nShelf = new StorageShelf(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
-						floor.addActor(nShelf,Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
+			    		runnable = floor.addActor(nShelf,Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 						shelves.put(nShelf.getUID(),nShelf);
-						System.out.println(nShelf.getUID());
 			    		break;
 			    	case "station":
-			    		floor.addActor(new PackingStation(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]), orders, floor.getRobots()),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
+			    		runnable = floor.addActor(new PackingStation(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]), orders, floor.getRobots()),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 			    		break;
 			    	case "order":
 			    		StorageShelf[] orderShelves = new StorageShelf[lineArr.length-2];
 			    		for (int i = 2; i < lineArr.length; i++) {
-			    			System.out.println(lineArr[i]);
-			    			System.out.println(shelves.get(lineArr[i]).getUID());
 			    			orderShelves[i-2] = shelves.get(lineArr[i]);			    			
 			    		}
 			    		orders.addOrder(new Order(Integer.parseInt(lineArr[1]), orderShelves));
@@ -79,8 +77,10 @@ public class WarehouseSimulation extends Simulation {
 			    		break;
 			    	}
 			    }
+			    System.out.println(runnable);
+			    wc.setRunnable(runnable);
 		    } else {
-		    	System.out.println("Invalid simulation format");
+		    	System.out.println("WARNING - Invalid simulation format");
 		    }
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

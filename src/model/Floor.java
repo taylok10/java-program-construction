@@ -70,12 +70,17 @@ public class Floor extends GridPane {
 	 * @param x the x coordinate of the Cell 
 	 * @param y the y coordinate of the Cell 
 	 */
-	public void addActor(Actor actor, int x, int y) {
-		GridCell gCell = gCells[x][y];
-		gCell.addActor(actor);
-		if (actor.getClass().getSimpleName().equals("Robot")) {
-			robots.add((Robot)actor);
-			System.out.println("Added Robot " + actor.getUID() + " to robots in Floor");
+	public boolean addActor(Actor actor, int x, int y) {
+		if (x < width && y < height) {
+			GridCell gCell = gCells[x][y];
+			gCell.addActor(actor);
+			if (actor.getClass().getSimpleName().equals("Robot")) {
+				robots.add((Robot)actor);
+			}
+			return true;
+		} else {
+			System.out.println("ERROR - " + actor.getClass().getSimpleName() + ": " + actor.getUID() + " cannot be placed outside of the grid");
+			return false;
 		}
 	}
 	

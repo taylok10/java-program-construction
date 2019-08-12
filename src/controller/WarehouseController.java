@@ -38,6 +38,7 @@ public class WarehouseController {
 	@FXML public void initialize() {
 		txtChargeCapacity.setText(String.valueOf(capacity));
 		txtChargeSpeed.setText(String.valueOf(chargeSpeed));
+		setRunnable(false);
 	}
 
 	public void setCapacity(int capacity) {
@@ -84,6 +85,20 @@ public class WarehouseController {
 		System.out.println(userCell.getActorsDesc());
 	}
 	
+	public void setRunnable(boolean runnable) {
+		if (runnable) {
+			btnTick.setDisable(false);
+			btnMultiTick.setDisable(false);
+			btnEndRun.setDisable(false);
+			txtMultiTickValue.setDisable(false);
+		} else {
+			btnTick.setDisable(true);
+			btnMultiTick.setDisable(true);
+			btnEndRun.setDisable(true);
+			txtMultiTickValue.setDisable(true);
+		}
+	}
+	
 	public void menuItemImport() {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().addAll(new ExtensionFilter("Simulation Files","*.sim"));
@@ -91,7 +106,7 @@ public class WarehouseController {
 		if (selectedFile != null) {
 			mt.loadImport(selectedFile);
 		} else {
-			System.out.println("Invalid File Selected");
+			System.out.println("ERROR - Invalid File Selected");
 		}
 	}
 	
