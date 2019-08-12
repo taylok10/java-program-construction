@@ -70,8 +70,7 @@ public class WarehouseSimulation extends Simulation {
 			    		for (int i = 2; i < lineArr.length; i++) {
 			    			orderShelves[i-2] = shelves.get(lineArr[i]);			    			
 			    		}
-			    		// NOTE FOR JOE: I've defaulted to ticks to pack to 0, please update this as relevant
-			    		orders.addOrder(new Order(0, orderShelves));
+			    		orders.addOrder(new Order(Integer.parseInt(lineArr[1]), orderShelves));
 			    		break;
 			    	default:
 			    		System.out.println("Invalid format: " + lineArr[0]);

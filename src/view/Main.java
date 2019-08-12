@@ -41,6 +41,7 @@ public class Main extends Application {
 			scene.getStylesheets().add("stylesheet.css");
 			primaryStage.setTitle("Warehouse");
 			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 			
 			ws.setFloor(wc.getFloor());
