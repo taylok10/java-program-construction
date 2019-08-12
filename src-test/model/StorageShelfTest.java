@@ -39,4 +39,15 @@ public class StorageShelfTest {
 	public void testGetPosition() {
 		assertArrayEquals(new int[] { 0, 0 }, storageShelfOne.getPosition());
 	}
+	
+	@Test
+	public void testAct() {
+		int[] positionBeforeAct = storageShelfOne.getPosition();
+		String UIDBeforeAct = storageShelfOne.getUID();
+		storageShelfOne.act();
+		
+		//Assert nothing has changed on the StorageShelf
+		assertEquals(positionBeforeAct, storageShelfOne.getPosition());
+		assertEquals(UIDBeforeAct, storageShelfOne.getUID());
+	}
 }

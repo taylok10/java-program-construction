@@ -11,7 +11,6 @@ public class StorageShelf extends Actor {
 
 	@Override
 	public void act() {
-		// TODO Auto-generated method stub
-		
+		//Do Nothing. StorageShelf is a passive marker.
 	}
 }
