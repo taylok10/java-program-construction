@@ -15,27 +15,28 @@ import org.junit.Test;
  *
  */
 public class ChargingPodTest {
-	private ChargingPod one;
+	private static final String identifier = "c";
+	private ChargingPod chargingPodOne;
 
 	@Before
 	public void setup() {
-		one = new ChargingPod(0, 0);
+		chargingPodOne = new ChargingPod(0, 0);
 	}
 
 	@Test
 	public void testUIDFormat() {
-		assertTrue(one.getUID().matches("^C[0-9]+$"));
+		assertTrue(chargingPodOne.getUID().matches("^" + identifier + "[0-9]+$"));
 	}
 
 	@Test
 	public void testNewChargingPodIncrementsUID() {
-		int currentUID = Integer.parseInt(one.getUID().replaceFirst("C", ""));
-		ChargingPod two = new ChargingPod(0, 1);
-		assertEquals("C" + ++currentUID, two.getUID());
+		int currentUID = Integer.parseInt(chargingPodOne.getUID().replaceFirst(identifier, ""));
+		ChargingPod chargingPodTwo = new ChargingPod(0, 1);
+		assertEquals(identifier + ++currentUID, chargingPodTwo.getUID());
 	}
 
 	@Test
 	public void testGetPosition() {
-		assertArrayEquals(new int[] { 0, 0 }, one.getPosition());
+		assertArrayEquals(new int[] { 0, 0 }, chargingPodOne.getPosition());
 	}
 }

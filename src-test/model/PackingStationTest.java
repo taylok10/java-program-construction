@@ -15,27 +15,28 @@ import org.junit.Test;
  *
  */
 public class PackingStationTest {
-	private PackingStation one;
+	private static final String identifier = "ps";
+	private PackingStation packingStationOne;
 
 	@Before
 	public void setup() {
-		one = new PackingStation(0, 0);
+		packingStationOne = new PackingStation(0, 0);
 	}
 
 	@Test
 	public void testUIDFormat() {
-		assertTrue(one.getUID().matches("^P[0-9]+$"));
+		assertTrue(packingStationOne.getUID().matches("^" + identifier + "[0-9]+$"));
 	}
 
 	@Test
 	public void testNewPackingStationIncrementsUID() {
-		int currentUID = Integer.parseInt(one.getUID().replaceFirst("P", ""));
-		PackingStation two = new PackingStation(0, 1);
-		assertEquals("P" + ++currentUID, two.getUID());
+		int currentUID = Integer.parseInt(packingStationOne.getUID().replaceFirst(identifier, ""));
+		PackingStation packingStationTwo = new PackingStation(0, 1);
+		assertEquals(identifier + ++currentUID, packingStationTwo.getUID());
 	}
 
 	@Test
 	public void testGetPosition() {
-		assertArrayEquals(new int[] { 0, 0 }, one.getPosition());
+		assertArrayEquals(new int[] { 0, 0 }, packingStationOne.getPosition());
 	}
 }

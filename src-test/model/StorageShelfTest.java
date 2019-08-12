@@ -15,27 +15,28 @@ import org.junit.Test;
  *
  */
 public class StorageShelfTest {
-	private StorageShelf one;
+	private static final String identifier = "ss";
+	private StorageShelf storageShelfOne;
 
 	@Before
 	public void setup() {
-		one = new StorageShelf(0, 0);
+		storageShelfOne = new StorageShelf(0, 0);
 	}
 
 	@Test
 	public void testUIDFormat() {
-		assertTrue(one.getUID().matches("^S[0-9]+$"));
+		assertTrue(storageShelfOne.getUID().matches("^" + identifier + "[0-9]+$"));
 	}
 
 	@Test
 	public void testNewStorageShelfIncrementsUID() {
-		int currentUID = Integer.parseInt(one.getUID().replaceFirst("S", ""));
-		StorageShelf two = new StorageShelf(0, 1);
-		assertEquals("S" + ++currentUID, two.getUID());
+		int currentUID = Integer.parseInt(storageShelfOne.getUID().replaceFirst(identifier, ""));
+		StorageShelf storageShelfTwo = new StorageShelf(0, 1);
+		assertEquals(identifier + ++currentUID, storageShelfTwo.getUID());
 	}
 
 	@Test
 	public void testGetPosition() {
-		assertArrayEquals(new int[] { 0, 0 }, one.getPosition());
+		assertArrayEquals(new int[] { 0, 0 }, storageShelfOne.getPosition());
 	}
 }
