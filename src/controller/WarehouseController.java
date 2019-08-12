@@ -30,6 +30,7 @@ public class WarehouseController {
 	private MainTest mt;
 	private static Cell userCell;
 	private static int userX, userY;
+	private WarehouseSimulation warehouseSimulation = new WarehouseSimulation();
 	
 	public WarehouseController(MainTest mt) {
 		this.mt = mt;
@@ -93,7 +94,7 @@ public class WarehouseController {
 			public void handle(ActionEvent e) {
 				int x = userCell.getColumn();
 				int y = userCell.getRow();
-				floor.addActor(new PackingStation(x,y),x,y);
+				floor.addActor(new PackingStation(x,y, warehouseSimulation.getOrders()),x,y);
 			}
 		});
 		

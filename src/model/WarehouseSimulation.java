@@ -3,6 +3,7 @@
  */
 package model;
 
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
@@ -11,7 +12,7 @@ import java.util.Queue;
  *
  */
 public class WarehouseSimulation extends Simulation {
-	Queue<Order> orders;
+	Queue<Order> orders = new LinkedList<Order>();
 	Map<Order, Integer> orderStats;
 	Floor floor;
 	
@@ -35,5 +36,9 @@ public class WarehouseSimulation extends Simulation {
 	public boolean multiTick(int ticks) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public Queue<Order> getOrders(){
+		return orders;
 	}
 }
