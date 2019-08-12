@@ -7,6 +7,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +18,8 @@ import org.junit.Test;
  */
 public class CellTest {
 	private Cell cell;
+	private OrderManager orderManager = new OrderManager();
+	private ArrayList<Robot> robots = new ArrayList<Robot>();
 	
 	@Before
 	public void setup() {
@@ -41,7 +45,7 @@ public class CellTest {
 	
 	@Test
 	public void testAddPackingStation() {
-		PackingStation packingStation = new PackingStation(0, 0);
+		PackingStation packingStation = new PackingStation(0, 0, orderManager, robots);
 		assertTrue(cell.addActor(packingStation));
 		assertTrue(cell.getActors().contains(packingStation));
 	}
@@ -77,7 +81,7 @@ public class CellTest {
 		cell.addActor(storageShelf);
 		assertFalse(cell.isBlocked());
 		
-		PackingStation packingStation = new PackingStation(0, 0);
+		PackingStation packingStation = new PackingStation(0, 0, orderManager, robots);
 		cell.addActor(packingStation);
 		assertFalse(cell.isBlocked());
 	}

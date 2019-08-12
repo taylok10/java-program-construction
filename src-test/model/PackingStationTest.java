@@ -7,6 +7,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -21,20 +22,24 @@ public class PackingStationTest {
 	private static final String IDENTIFIER = "ps";
 	private PackingStation packingStationOne;
 	private PackingStation packingStationTwo;
-	private Queue<Order> orders = new LinkedList<Order>();
-	private Order orderOne = new Order(new StorageShelf[] { new StorageShelf(0, 0), new StorageShelf(0, 1) });
-	private Order orderTwo = new Order(new StorageShelf[] { new StorageShelf(1, 0), new StorageShelf(1, 1) });
+	private OrderManager orders;
+	private Order orderOne = new Order(1, new StorageShelf[] { new StorageShelf(0, 0), new StorageShelf(0, 1) });
+	private Order orderTwo = new Order(2, new StorageShelf[] { new StorageShelf(1, 0), new StorageShelf(1, 1) });
+	private ArrayList<Robot> robots;
 
 	@Before
 	public void setup() {
 		// Setup orders
-		orders.clear();
-		orders.add(orderOne);
-		orders.add(orderTwo);
-
+		orders = new OrderManager();
+		orders.addOrder(orderOne);
+		orders.addOrder(orderTwo);
+		
+		// Setup Robots
+		robots = new ArrayList<Robot>();
+		
 		// Setup packing stations
-		packingStationOne = new PackingStation(0, 0, orders);
-		packingStationTwo = new PackingStation(0, 1, orders);
+		packingStationOne = new PackingStation(0, 0, orders, robots);
+		packingStationTwo = new PackingStation(0, 1, orders, robots);
 	}
 
 	@Test
@@ -45,7 +50,7 @@ public class PackingStationTest {
 	@Test
 	public void testNewPackingStationIncrementsUID() {
 		int currentUID = Integer.parseInt(packingStationTwo.getUID().replaceFirst(IDENTIFIER, ""));
-		PackingStation packingStationThree = new PackingStation(0, 2, orders);
+		PackingStation packingStationThree = new PackingStation(0, 2, orders, robots);
 		assertEquals(IDENTIFIER + ++currentUID, packingStationThree.getUID());
 	}
 
