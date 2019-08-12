@@ -83,6 +83,13 @@ public class Cell extends Button implements GridLocation {
 	}
 	
     /**
+     * @return The actors in this Cell
+     */
+	public List<Actor> getActors() {
+		return actors;
+	}
+	
+    /**
      * @return String list of Actors in Cell
      */
 	public String getActorTypes() {
