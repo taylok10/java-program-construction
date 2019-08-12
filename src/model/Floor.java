@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import view.GridCell;
 
 /**
  * The Floor GridPane that contains Cells and Actors
@@ -22,6 +23,7 @@ public class Floor extends GridPane {
 
 	private int width, height;
 	private Cell[][] cells;
+	private GridCell[][] gCells;
 	private static Cell userCell;
 	
 	public Floor(@NamedArg("width") int width, @NamedArg("height") int height) {
@@ -30,6 +32,7 @@ public class Floor extends GridPane {
 		this.height = height;
 		userCell = null;
 		cells = new Cell[width][height];
+		gCells = new GridCell[width][height];
 		resizeGrid();
 		// To be determined in the future
 		this.setPrefSize(400, 400);
@@ -40,19 +43,22 @@ public class Floor extends GridPane {
 	 * Resizes the grid of Cells(Buttons) based on set width and height variables
 	 */
 	private void resizeGrid() {
-        this.getChildren().removeAll(getCellList());
+        this.getChildren().removeAll(getGridCellList());
         cells = new Cell[width][height];
+        gCells = new GridCell[width][height];
 		
 		for(int i = 0; i < width; i++) {
 	        for(int j = 0; j < height; j++) {
 	        	Cell nCell = new Cell(i,j);
-	        	nCell.setPrefSize(400/width, 400/height);
-	        	nCell.setOnMouseClicked(e -> {
+	        	GridCell gCell = new GridCell(nCell);
+	        	gCell.setPrefSize(400/width, 400/height);
+	        	gCell.setOnMouseClicked(e -> {
 	        		WarehouseController.setUserCell(nCell);
 	        		System.out.println(nCell.getColumn() + "," + nCell.getRow());
 	            });
-	        	this.add(nCell,i,j);
+	        	this.add(gCell,i,j);
 	        	cells[i][j] = nCell;
+	        	gCells[i][j] = gCell;
 	        }
         }
 		WarehouseController.setUserCell(cells[0][0]);
@@ -66,10 +72,8 @@ public class Floor extends GridPane {
 	 * @param y the y coordinate of the Cell 
 	 */
 	public void addActor(Actor actor, int x, int y) {
-		Cell cell = cells[x][y];
-		System.out.println(cell.getColumn() + "," + cell.getRow());
-		cell.addActor(actor);
-		System.out.println(cell.getActorsDesc());
+		GridCell gCell = gCells[x][y];
+		gCell.addActor(actor);
 	}
 	
 	/**
@@ -80,10 +84,8 @@ public class Floor extends GridPane {
 	 * @param y the y coordinate of the Cell 
 	 */
 	public void removeActor(String type, int x, int y) {
-		Cell cell = cells[x][y];
-		System.out.println(cell.getColumn() + "," + cell.getRow());
-		cell.removeActor(type);
-		System.out.println(cell.getActorsDesc());
+		GridCell gCell = gCells[x][y];
+		gCell.removeActor(type);
 	}
 	
 	/**
@@ -110,8 +112,8 @@ public class Floor extends GridPane {
 		return userCell;
 	}
 	
-	public List<Cell> getCellList(){
-		List<Cell> cellList = Arrays.stream(cells).flatMap(Arrays::stream).collect(Collectors.toList());
+	public List<GridCell> getGridCellList(){
+		List<GridCell> cellList = Arrays.stream(gCells).flatMap(Arrays::stream).collect(Collectors.toList());
 		return cellList;
 	}
 	

@@ -8,15 +8,16 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import view.GridCell;
 
 /**
  * @author kelly.taylor
  *
  */
-public class Cell extends Button implements GridLocation {
+public class Cell implements GridLocation {
 	private int row, column;
 	private List<Actor> actors;
-	private static ObservableList<String> btnStyle;
+	private GridCell gCell;
 	
     /**
      * Represents a cell on on grid
@@ -29,7 +30,7 @@ public class Cell extends Button implements GridLocation {
     	actors = new ArrayList<Actor>();
         this.row = row;
         this.column = column;
-		btnStyle = this.getStyleClass();
+        gCell = null;
     }
     
     /**
@@ -39,7 +40,7 @@ public class Cell extends Button implements GridLocation {
     public boolean addActor(Actor actor) {
 		if (getActorTypes().isEmpty() || (actor.getClass().getSimpleName().equals("Robot")) && (getActorTypes().equals("ChargingPod")) ) {
 			actors.add(actor);
-			refreshGraphics();
+			gCell.refreshGraphics();
 			return true;
 		}
 		System.out.println("ERROR - Cannot add " + actor.getClass().getSimpleName() + " to cell " + column + "," + row);
@@ -61,10 +62,9 @@ public class Cell extends Button implements GridLocation {
 		}
 		if (toRemove != null) {
 			actors.remove(toRemove);
-			refreshGraphics();
+			gCell.refreshGraphics();
 			return true;
 		}
-		refreshGraphics();
 		return false;
 	}
 	
@@ -116,58 +116,11 @@ public class Cell extends Button implements GridLocation {
 		}
 		return output;
 	}
-	
-	public void refreshStyle() {
-		List<String> toRemove = new ArrayList<String>();
-		
-		for (String s : getStyleClass()) {
-			switch(s) {
-			case "packing-station-cell":
-				toRemove.add(s);
-				break;
-			case "charging-pod-cell":
-				toRemove.add(s);
-				break;
-			case "storage-shelf-cell":
-				toRemove.add(s);
-				break;
-			}
-		}
-		
-		for (String remove : toRemove) {
-			getStyleClass().remove(remove);
-		}
-	}
-	
-	/**
-	 * Refreshes all Cell graphics when called
-	 */
-	public void refreshGraphics() {
-		String check = getActorTypes();
-		System.out.println(check);
-		if (!check.equals("") || check.equals("Robot")) {
-			if(check.contains("PackingStation")) {
-				this.getStyleClass().add("packing-station-cell");
-			} else if(check.contains("ChargingPod")) {
-				this.getStyleClass().add("charging-pod-cell");
-			} else if(check.contains("StorageShelf")) {
-				this.getStyleClass().add("storage-shelf-cell");
-			} else {
-				refreshStyle();
-			}
-			
-			if(check.contains("Robot")) {
-				this.setText("R");
-			} else {
-				this.setText("");
-			}
-			
-		} else {
-			refreshStyle();
-			this.setText("");
-		}
-	}
 
+	public void setGridCell(GridCell gCell) {
+		this.gCell = gCell;
+	}
+	
 	@Override
 	public boolean isBlocked() {
 		return getActorTypes().contains("Robot");
