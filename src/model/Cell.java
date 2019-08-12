@@ -17,7 +17,6 @@ import view.GridCell;
 public class Cell implements GridLocation {
 	private int row, column;
 	private List<Actor> actors;
-	private GridCell gCell;
 	
     /**
      * Represents a cell on on grid
@@ -30,7 +29,6 @@ public class Cell implements GridLocation {
     	actors = new ArrayList<Actor>();
         this.row = row;
         this.column = column;
-        gCell = null;
     }
     
     /**
@@ -40,7 +38,6 @@ public class Cell implements GridLocation {
     public boolean addActor(Actor actor) {
 		if (getActorTypes().isEmpty() || (actor.getClass().getSimpleName().equals("Robot")) && (getActorTypes().equals("ChargingPod")) ) {
 			actors.add(actor);
-			gCell.refreshGraphics();
 			return true;
 		}
 		System.out.println("ERROR - Cannot add " + actor.getClass().getSimpleName() + " to cell " + column + "," + row);
@@ -62,7 +59,6 @@ public class Cell implements GridLocation {
 		}
 		if (toRemove != null) {
 			actors.remove(toRemove);
-			gCell.refreshGraphics();
 			return true;
 		}
 		return false;
@@ -115,10 +111,6 @@ public class Cell implements GridLocation {
 			}
 		}
 		return output;
-	}
-
-	public void setGridCell(GridCell gCell) {
-		this.gCell = gCell;
 	}
 	
 	@Override

@@ -35,7 +35,7 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 		tree = new LinkedList<LinearNode<T>>();
 		visitedLocations = new ArrayList<T>();
 		// Start at the target location so we can navigate the LinearNodes from start to
-		// finish
+		// finish - This is more efficient than reversing at the end
 		LinearNode<T> initialNode = new LinearNode<T>(targetLocation);
 		tree.add(initialNode);
 		return searchNodes(startLocation);

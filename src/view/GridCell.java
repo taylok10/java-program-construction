@@ -12,7 +12,6 @@ public class GridCell extends Button {
 	
 	public GridCell(Cell cell) {
 		this.cell = cell;
-		cell.setGridCell(this);
 	}
 	
 	public void refreshStyle() {
@@ -67,10 +66,14 @@ public class GridCell extends Button {
 	}
 	
 	public void addActor(Actor actor) {
-		cell.addActor(actor);
+		if(cell.addActor(actor)) {
+			refreshGraphics();
+		}
 	}
 	
 	public void removeActor(String type) {
-		cell.removeActor(type);
+		if(cell.removeActor(type)) {
+			refreshGraphics();
+		}
 	}
 }
