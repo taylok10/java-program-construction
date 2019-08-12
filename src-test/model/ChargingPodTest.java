@@ -15,7 +15,7 @@ import org.junit.Test;
  *
  */
 public class ChargingPodTest {
-	private static final String identifier = "c";
+	private static final String IDENTIFIER = "c";
 	private ChargingPod chargingPodOne;
 
 	@Before
@@ -25,14 +25,14 @@ public class ChargingPodTest {
 
 	@Test
 	public void testUIDFormat() {
-		assertTrue(chargingPodOne.getUID().matches("^" + identifier + "[0-9]+$"));
+		assertTrue(chargingPodOne.getUID().matches("^" + IDENTIFIER + "[0-9]+$"));
 	}
 
 	@Test
 	public void testNewChargingPodIncrementsUID() {
-		int currentUID = Integer.parseInt(chargingPodOne.getUID().replaceFirst(identifier, ""));
+		int currentUID = Integer.parseInt(chargingPodOne.getUID().replaceFirst(IDENTIFIER, ""));
 		ChargingPod chargingPodTwo = new ChargingPod(0, 1);
-		assertEquals(identifier + ++currentUID, chargingPodTwo.getUID());
+		assertEquals(IDENTIFIER + ++currentUID, chargingPodTwo.getUID());
 	}
 
 	@Test

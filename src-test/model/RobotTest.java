@@ -15,7 +15,7 @@ import org.junit.Test;
  *
  */
 public class RobotTest {
-	private static final String identifier = "r";
+	private static final String IDENTIFIER = "r";
 	private Robot robotOne;
 
 	@Before
@@ -25,14 +25,14 @@ public class RobotTest {
 
 	@Test
 	public void testUIDFormat() {
-		assertTrue(robotOne.getUID().matches("^" + identifier + "[0-9]+$"));
+		assertTrue(robotOne.getUID().matches("^" + IDENTIFIER + "[0-9]+$"));
 	}
 
 	@Test
 	public void testNewRobotIncrementsUID() {
-		int currentUID = Integer.parseInt(robotOne.getUID().replaceFirst(identifier, ""));
+		int currentUID = Integer.parseInt(robotOne.getUID().replaceFirst(IDENTIFIER, ""));
 		Robot robotTwo = new Robot(0, 1);
-		assertEquals(identifier + ++currentUID, robotTwo.getUID());
+		assertEquals(IDENTIFIER + ++currentUID, robotTwo.getUID());
 	}
 
 	@Test

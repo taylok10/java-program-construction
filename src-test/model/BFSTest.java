@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  */
 public class BFSTest {
-	private final Cell[][] emptyGrid = {
+	private final static Cell[][] EMPTY_GRID = {
 			{ new Cell(0, 0), new Cell(1, 0), new Cell(2, 0), new Cell(3, 0), new Cell(4, 0), new Cell(5, 0) },
 			{ new Cell(0, 1), new Cell(1, 1), new Cell(2, 1), new Cell(3, 1), new Cell(4, 1), new Cell(5, 1) },
 			{ new Cell(0, 2), new Cell(1, 2), new Cell(2, 2), new Cell(3, 2), new Cell(4, 2), new Cell(5, 2) },
@@ -48,9 +48,9 @@ public class BFSTest {
 
 	@Test
 	public void testFindPathOnEmptyGrid() {
-		BFS<Cell> BFS = new BFS<Cell>(emptyGrid);
-		Cell startLocation = emptyGrid[5][2];
-		Cell endLocation = emptyGrid[0][4];
+		BFS<Cell> BFS = new BFS<Cell>(EMPTY_GRID);
+		Cell startLocation = EMPTY_GRID[5][2];
+		Cell endLocation = EMPTY_GRID[0][4];
 
 		PathLink<Cell> result = BFS.findPath(startLocation, endLocation);
 		// Most efficient path should be 7 nodes

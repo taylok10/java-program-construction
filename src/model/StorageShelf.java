@@ -1,11 +1,11 @@
 package model;
 
 public class StorageShelf extends Actor {
-	private static final String identifier = "ss";
+	private static final String IDENTIFIER = "ss";
 	private static int id = 0;
 	
 	public StorageShelf(int x, int y) {
-		super(x,y, identifier + id);
+		super(x,y, IDENTIFIER + id);
 		id++;
 	}
 

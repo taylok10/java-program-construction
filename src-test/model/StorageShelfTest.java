@@ -15,7 +15,7 @@ import org.junit.Test;
  *
  */
 public class StorageShelfTest {
-	private static final String identifier = "ss";
+	private static final String IDENTIFIER = "ss";
 	private StorageShelf storageShelfOne;
 
 	@Before
@@ -25,14 +25,14 @@ public class StorageShelfTest {
 
 	@Test
 	public void testUIDFormat() {
-		assertTrue(storageShelfOne.getUID().matches("^" + identifier + "[0-9]+$"));
+		assertTrue(storageShelfOne.getUID().matches("^" + IDENTIFIER + "[0-9]+$"));
 	}
 
 	@Test
 	public void testNewStorageShelfIncrementsUID() {
-		int currentUID = Integer.parseInt(storageShelfOne.getUID().replaceFirst(identifier, ""));
+		int currentUID = Integer.parseInt(storageShelfOne.getUID().replaceFirst(IDENTIFIER, ""));
 		StorageShelf storageShelfTwo = new StorageShelf(0, 1);
-		assertEquals(identifier + ++currentUID, storageShelfTwo.getUID());
+		assertEquals(IDENTIFIER + ++currentUID, storageShelfTwo.getUID());
 	}
 
 	@Test
