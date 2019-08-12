@@ -12,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.DataRegistry;
 import model.Floor;
 import model.Order;
 import model.WarehouseSimulation;
@@ -22,10 +21,6 @@ public class Main extends Application {
 	public static Scene scene;
 	private static WarehouseSimulation ws;
 	private static WarehouseController wc;
-
-	private static Queue<Order> orders;
-	private static Map<Order, Integer> orderStats;
-	private static DataRegistry dr;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -45,33 +40,22 @@ public class Main extends Application {
 			primaryStage.show();
 			
 			ws.setFloor(wc.getFloor());
-//			dr = new DataRegistry(this);
+			ws.setController(wc);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) {
-		orders = new LinkedList<Order>() ;
 		launch(args);
 	}
 	
 	public void loadImport(File file) {
-//		dr.loadImport(file);
 		ws.readSimulation(file);
 	}
 	
 	public WarehouseController getWarehouseController() {
 		return wc;
-	}
-	
-	public Queue<Order> getOrders(){
-		return orders;
-	}
-	
-	public void addOrder(Order order) {
-		orders.add(order);
-		System.out.println(orders.size());
 	}
 	
 	public WarehouseSimulation getWarehouseSimulation() {

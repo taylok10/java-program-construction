@@ -25,4 +25,9 @@ public class OrderManager {
 	public boolean addOrder(Order order) {
 		return orders.add(order);
 	}
+	
+	public void empty() {
+		orders = new LinkedList<Order>();
+		dispatchedOrders = new ArrayList<Order>();
+	}
 }

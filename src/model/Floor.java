@@ -1,6 +1,5 @@
 package model;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,10 +7,7 @@ import java.util.stream.Collectors;
 
 import controller.WarehouseController;
 import javafx.beans.NamedArg;
-import javafx.geometry.Pos;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import view.GridCell;
 
 /**
@@ -25,12 +21,11 @@ public class Floor extends GridPane {
 	private Cell[][] cells;
 	private GridCell[][] gCells;
 	private static Cell userCell;
-	// We need to keep track of all the robots we have on this floor so other Actors can access them
-	// NOTE FOR JOE: Can you update this accordingly at all?
 	private ArrayList<Robot> robots;
 	
 	public Floor(@NamedArg("width") int width, @NamedArg("height") int height) {
 		super();
+		robots = new ArrayList<Robot>();
 		this.width = width;
 		this.height = height;
 		userCell = null;
@@ -49,6 +44,7 @@ public class Floor extends GridPane {
         this.getChildren().removeAll(getGridCellList());
         cells = new Cell[width][height];
         gCells = new GridCell[width][height];
+        robots.clear();
 		
 		for(int i = 0; i < width; i++) {
 	        for(int j = 0; j < height; j++) {
@@ -77,6 +73,10 @@ public class Floor extends GridPane {
 	public void addActor(Actor actor, int x, int y) {
 		GridCell gCell = gCells[x][y];
 		gCell.addActor(actor);
+		if (actor.getClass().getSimpleName().equals("Robot")) {
+			robots.add((Robot)actor);
+			System.out.println("Added Robot " + actor.getUID() + " to robots in Floor");
+		}
 	}
 	
 	/**

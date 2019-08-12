@@ -2,52 +2,69 @@ package controller;
 
 import java.io.File;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.Cell;
-import model.ChargingPod;
 import model.Floor;
-import model.PackingStation;
-import model.Robot;
-import model.StorageShelf;
 import model.WarehouseSimulation;
 import view.Main;
 
 public class WarehouseController {
 	@FXML Floor floor;
 	@FXML Button btnTick, btnMultiTick, btnEndRun;
-	@FXML TextField txtMultiTickValue;
-	@FXML MenuItem menuItemImport;
+	@FXML TextField txtMultiTickValue, txtChargeSpeed, txtChargeCapacity;
+	@FXML MenuItem menuItemImport, menuItemLog, menuItemFloor;
 	
 	private Main mt;
 	private static Cell userCell;
 	private WarehouseSimulation warehouseSimulation;
+	private int chargeSpeed, capacity;
 	
 	public WarehouseController(Main mt) {
+		this.chargeSpeed = 0;
+		this.capacity = 0;
 		this.mt = mt;
 		userCell = null;
 		warehouseSimulation = mt.getWarehouseSimulation();
 	}
 	
 	@FXML public void initialize() {
-
+		txtChargeCapacity.setText(String.valueOf(capacity));
+		txtChargeSpeed.setText(String.valueOf(chargeSpeed));
 	}
 
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+		txtChargeCapacity.setText(String.valueOf(capacity));
+	}
+	
+	public void setChargeSpeed(int chargeSpeed) {
+		this.chargeSpeed = chargeSpeed;
+		txtChargeSpeed.setText(String.valueOf(chargeSpeed));
+	}
+	
+	public void switchScene() {
+		
+	}
+	
+	public int getChargeSpeed() {
+		return chargeSpeed;
+	}
+	
+	public int getCapacity() {
+		return capacity;
+	}
+	
 	public void tick() {
-		System.out.println("Tick");
+		warehouseSimulation.tick();
 	}
 	
 	public void multiTick() {
-		System.out.println("Multiple Ticks, Amount = " + txtMultiTickValue.getText());
+		warehouseSimulation.multiTick(Integer.parseInt(txtMultiTickValue.getText()));
 	}
 	
 	public void endRun() {
