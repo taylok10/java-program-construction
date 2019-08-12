@@ -3,16 +3,16 @@
  */
 package model;
 
-import java.util.List;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * @author kelly.taylor
  *
  */
 public class OrderManager {
-	private Queue<Order> orders;
-	private List<Order> dispatchedOrders;
+	private LinkedList<Order> orders = new LinkedList<Order>();
+	private ArrayList<Order> dispatchedOrders = new ArrayList<Order>();
 	
 	public boolean dispatchOrder(Order order) {
 		return dispatchedOrders.add(order);
