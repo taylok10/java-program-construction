@@ -29,6 +29,5 @@ JPC Amazon Warehouse Simulation
 
 ## Testing TODO list
  * jUnit testing for all model classes
- * PackingStationTest needs to unit test act()
  * RobotTest needs additional unit tests
  * ChargingPod needs to unit test act()
