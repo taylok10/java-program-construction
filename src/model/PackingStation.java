@@ -12,7 +12,7 @@ public class PackingStation extends Actor {
 	private Order currentOrder;
 	private OrderItem itemInProgress;
 	private OrderManager orders;
-	private List<Robot> robots;
+	private List<Actor> robots;
 
 	/**
 	 * Creates a new PackingStation
@@ -22,7 +22,7 @@ public class PackingStation extends Actor {
 	 * @param orderManager The OrderManager of this PackingStation
 	 * @param robots       The robots this PackingStation has access to
 	 */
-	public PackingStation(int x, int y, OrderManager orderManager, List<Robot> robots) {
+	public PackingStation(int x, int y, OrderManager orderManager, List<Actor> robots) {
 		super(x, y, IDENTIFIER + id);
 		id++;
 		orders = orderManager;
@@ -107,8 +107,9 @@ public class PackingStation extends Actor {
 	}
 
 	private void requestRobot(StorageShelf shelf) {
-		for (Robot robot : robots) {
-			boolean accepted = robot.assignmentRequest(shelf);
+		for (Actor robot : robots) {
+			Robot robot2 = (Robot)robot;
+			boolean accepted = robot2.assignmentRequest(shelf);
 			if (accepted) {
 				// We have a robot, we can stop asking
 				return;

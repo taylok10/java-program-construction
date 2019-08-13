@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +80,7 @@ public class WarehouseSimulation extends Simulation {
 			    }
 			    System.out.println(runnable);
 			    wc.setRunnable(runnable);
+			    
 		    } else {
 		    	System.out.println("WARNING - Invalid simulation format");
 		    }
@@ -88,6 +90,13 @@ public class WarehouseSimulation extends Simulation {
 			e.printStackTrace();
 		}
 	}
+
+	private boolean act(ArrayList<Actor> actors) {
+		for (Actor actor : actors) {
+			actor.act();
+		}
+		return true;
+	}
 	
 	/* (non-Javadoc)
 	 * @see model.Simulation#tick()
@@ -95,7 +104,7 @@ public class WarehouseSimulation extends Simulation {
 	@Override
 	public boolean tick() {
 		System.out.println("Tick");
-		return false;
+		return act(floor.getPackingStations()) && act(floor.getRobots()) && act(floor.getStorageShelves()) && act(floor.getChargingPods());
 	}
 
 	/* (non-Javadoc)

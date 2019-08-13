@@ -21,11 +21,14 @@ public class Floor extends GridPane {
 	private Cell[][] cells;
 	private GridCell[][] gCells;
 	private static Cell userCell;
-	private ArrayList<Robot> robots;
+	private ArrayList<Actor> robots, packingStations, storageShelves, chargingPods;
 	
 	public Floor(@NamedArg("width") int width, @NamedArg("height") int height) {
 		super();
-		robots = new ArrayList<Robot>();
+		robots = new ArrayList<Actor>();
+		packingStations = new ArrayList<Actor>();
+		storageShelves = new ArrayList<Actor>();
+		chargingPods = new ArrayList<Actor>();
 		this.width = width;
 		this.height = height;
 		userCell = null;
@@ -74,8 +77,19 @@ public class Floor extends GridPane {
 		if (x < width && y < height) {
 			GridCell gCell = gCells[x][y];
 			gCell.addActor(actor);
-			if (actor.getClass().getSimpleName().equals("Robot")) {
+			switch (actor.getClass().getSimpleName()) {
+			case "Robot":
 				robots.add((Robot)actor);
+				break;
+			case "ChargingPod":
+				chargingPods.add((ChargingPod)actor);
+				break;
+			case "StorageShelf":
+				storageShelves.add((StorageShelf)actor);
+				break;
+			case "PackingStation":
+				packingStations.add((PackingStation)actor);
+				break;
 			}
 			return true;
 		} else {
@@ -133,7 +147,19 @@ public class Floor extends GridPane {
 		return width;
 	}
 	
-	public ArrayList<Robot> getRobots(){
+	public ArrayList<Actor> getRobots(){
 		return robots;
+	}
+	
+	public ArrayList<Actor> getPackingStations(){
+		return packingStations;
+	}
+	
+	public ArrayList<Actor> getStorageShelves(){
+		return storageShelves;
+	}
+	
+	public ArrayList<Actor> getChargingPods(){
+		return chargingPods;
 	}
 }
