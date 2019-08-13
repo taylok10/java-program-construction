@@ -13,6 +13,7 @@ import model.Cell;
 import model.ChargingPod;
 import model.Floor;
 import model.PackingStation;
+import model.Robot;
 import model.StorageShelf;
 import model.WarehouseSimulation;
 import view.Main;
