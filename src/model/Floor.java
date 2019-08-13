@@ -21,14 +21,17 @@ public class Floor extends GridPane {
 	private Cell[][] cells;
 	private GridCell[][] gCells;
 	private static Cell userCell;
-	private ArrayList<Actor> robots, packingStations, storageShelves, chargingPods;
+	private ArrayList<Robot> robots;
+	private ArrayList<PackingStation> packingStations;
+	private ArrayList<StorageShelf> storageShelves;
+	private ArrayList<ChargingPod> chargingPods;
 	
 	public Floor(@NamedArg("width") int width, @NamedArg("height") int height) {
 		super();
-		robots = new ArrayList<Actor>();
-		packingStations = new ArrayList<Actor>();
-		storageShelves = new ArrayList<Actor>();
-		chargingPods = new ArrayList<Actor>();
+		robots = new ArrayList<Robot>();
+		packingStations = new ArrayList<PackingStation>();
+		storageShelves = new ArrayList<StorageShelf>();
+		chargingPods = new ArrayList<ChargingPod>();
 		this.width = width;
 		this.height = height;
 		userCell = null;
@@ -147,19 +150,19 @@ public class Floor extends GridPane {
 		return width;
 	}
 	
-	public ArrayList<Actor> getRobots(){
+	public ArrayList<Robot> getRobots(){
 		return robots;
 	}
 	
-	public ArrayList<Actor> getPackingStations(){
+	public ArrayList<PackingStation> getPackingStations(){
 		return packingStations;
 	}
 	
-	public ArrayList<Actor> getStorageShelves(){
+	public ArrayList<StorageShelf> getStorageShelves(){
 		return storageShelves;
 	}
 	
-	public ArrayList<Actor> getChargingPods(){
+	public ArrayList<ChargingPod> getChargingPods(){
 		return chargingPods;
 	}
 }

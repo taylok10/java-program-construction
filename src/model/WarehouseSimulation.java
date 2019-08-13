@@ -90,13 +90,6 @@ public class WarehouseSimulation extends Simulation {
 			e.printStackTrace();
 		}
 	}
-
-	private boolean act(ArrayList<Actor> actors) {
-		for (Actor actor : actors) {
-			actor.act();
-		}
-		return true;
-	}
 	
 	/* (non-Javadoc)
 	 * @see model.Simulation#tick()
@@ -104,7 +97,19 @@ public class WarehouseSimulation extends Simulation {
 	@Override
 	public boolean tick() {
 		System.out.println("Tick");
-		return act(floor.getPackingStations()) && act(floor.getRobots()) && act(floor.getStorageShelves()) && act(floor.getChargingPods());
+		for (Actor actor : floor.getPackingStations()) {
+			actor.act();
+		}
+		for (Actor actor : floor.getChargingPods()) {
+			actor.act();
+		}
+		for (Actor actor : floor.getStorageShelves()) {
+			actor.act();
+		}
+		for (Actor actor : floor.getRobots()) {
+			actor.act();
+		}
+		return false;
 	}
 
 	/* (non-Javadoc)
