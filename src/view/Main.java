@@ -18,13 +18,14 @@ import model.WarehouseSimulation;
 
 public class Main extends Application {
 	public static Stage stage;
-	public static Scene scene;
+	public static Scene sceneSimulation, sceneLog;
 	private static WarehouseSimulation ws;
 	private static WarehouseController wc;
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			stage = primaryStage;
 			ws = new WarehouseSimulation();
 			wc = new WarehouseController(this);
 			
@@ -32,11 +33,10 @@ public class Main extends Application {
 			loader.setController(wc);
 			loader.setLocation(getClass().getResource("WarehouseSimulation.fxml"));
 			final Parent root = loader.load();
-
-			final Scene scene = new Scene(root);
-			scene.getStylesheets().add("stylesheet.css");
+			sceneSimulation = new Scene(root);
+			sceneSimulation.getStylesheets().add("stylesheet.css");
+			primaryStage.setScene(sceneSimulation);
 			primaryStage.setTitle("Warehouse");
-			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();
 			
@@ -62,6 +62,5 @@ public class Main extends Application {
 	public WarehouseSimulation getWarehouseSimulation() {
 		return ws;
 	}
-	
 	
 }

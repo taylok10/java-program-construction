@@ -29,6 +29,8 @@ public class WarehouseSimulation extends Simulation {
 		orders = new OrderManager();
 		shelves = new HashMap<String,StorageShelf>();
 		wc = null;
+		report = new ArrayList<String>();
+		report.add("Log:");
 	}
 	
 	public void readSimulation(File file) {
@@ -79,6 +81,9 @@ public class WarehouseSimulation extends Simulation {
 			    	}
 			    }
 			    System.out.println(runnable);
+			    if (runnable != wc.getRunnable()) {
+			    	wc.toggleRunnable();
+			    }
 			    wc.setRunnable(runnable);
 			    
 		    } else {
@@ -96,7 +101,6 @@ public class WarehouseSimulation extends Simulation {
 	 */
 	@Override
 	public boolean tick() {
-		System.out.println("Tick");
 		for (Actor actor : floor.getPackingStations()) {
 			actor.act();
 		}
@@ -109,7 +113,8 @@ public class WarehouseSimulation extends Simulation {
 		for (Actor actor : floor.getRobots()) {
 			actor.act();
 		}
-		return false;
+		wc.updateReport();
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -132,4 +137,5 @@ public class WarehouseSimulation extends Simulation {
 	public void setController(WarehouseController wc) {
 		this.wc = wc;
 	}
+
 }

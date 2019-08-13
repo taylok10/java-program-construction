@@ -57,6 +57,7 @@ public class Floor extends GridPane {
 	        	Cell nCell = new Cell(i,j);
 	        	GridCell gCell = new GridCell(nCell);
 	        	gCell.setPrefSize(400/width, 400/height);
+	        	gCell.setFocusTraversable(false);
 	        	gCell.setOnMouseClicked(e -> {
 	        		WarehouseController.setUserCell(nCell);
 	        		System.out.println(nCell.getColumn() + "," + nCell.getRow());

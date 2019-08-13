@@ -6,7 +6,9 @@ import javafx.beans.NamedArg;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.Cell;
@@ -23,11 +25,14 @@ public class WarehouseController {
 	@FXML Button btnTick, btnMultiTick, btnEndRun;
 	@FXML TextField txtMultiTickValue, txtChargeSpeed, txtChargeCapacity;
 	@FXML MenuItem menuItemImport, menuItemLog, menuItemFloor;
+	@FXML Pane paneFloor, paneReport;
+	@FXML TextArea txtAreaReport;
 	
 	private Main mt;
 	private static Cell userCell;
 	private WarehouseSimulation warehouseSimulation;
 	private int chargeSpeed, capacity;
+	private static boolean runnable = false;
 	
 	public WarehouseController(Main mt) {
 		this.chargeSpeed = 0;
@@ -40,12 +45,16 @@ public class WarehouseController {
 	@FXML public void initialize() {
 		txtChargeCapacity.setText(String.valueOf(capacity));
 		txtChargeSpeed.setText(String.valueOf(chargeSpeed));
-		setRunnable(false);
+		setRunnable(runnable);
 	}
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 		txtChargeCapacity.setText(String.valueOf(capacity));
+	}
+	
+	public void toggleRunnable() {
+		runnable = !runnable;
 	}
 	
 	public void setChargeSpeed(int chargeSpeed) {
@@ -55,10 +64,14 @@ public class WarehouseController {
 	
 	public void switchSceneLog() {
 		System.out.println("Switching to Log View");
+		paneReport.setVisible(true);
+		paneFloor.setVisible(false);
 	}
 	
 	public void switchSceneFloor() {
 		System.out.println("Switching to Warehouse View");
+		paneReport.setVisible(false);
+		paneFloor.setVisible(true);
 	}
 	
 	public int getChargeSpeed() {
@@ -124,7 +137,19 @@ public class WarehouseController {
 		ChargingPod.resetIdCount();
 		PackingStation.resetIdCount();
 		StorageShelf.resetIdCount();
-		Robot.resetIdCount();
+//		Robot.resetIdCount();
+	}
+	
+	public boolean getRunnable() {
+		return runnable;
+	}
+	
+	public void updateReport() {
+		txtAreaReport.setText(warehouseSimulation.getReport());
+	}
+	
+	public void setReport(String report) {
+		txtAreaReport.setText(report);
 	}
 	
 }

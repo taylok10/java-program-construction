@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public abstract class Simulation {
 	boolean isCompleted;
 	String failureReason;
-	ArrayList<String> report;
+	static ArrayList<String> report;
 
 	public abstract boolean tick();
 
@@ -34,7 +34,7 @@ public abstract class Simulation {
 		this.failureReason = failureReason;
 	}
 
-	public void addReportEntry(String reportEntry) {
+	public static void addReportEntry(String reportEntry) {
 		report.add(reportEntry);
 	}
 
