@@ -137,7 +137,7 @@ public class WarehouseController {
 		ChargingPod.resetIdCount();
 		PackingStation.resetIdCount();
 		StorageShelf.resetIdCount();
-//		Robot.resetIdCount();
+		Robot.resetIdCount();
 	}
 	
 	public boolean getRunnable() {

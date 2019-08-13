@@ -55,7 +55,7 @@ public class Main extends Application {
 		ws.readSimulation(file);
 	}
 	
-	public WarehouseController getWarehouseController() {
+	public static WarehouseController getWarehouseController() {
 		return wc;
 	}
 	

@@ -57,9 +57,8 @@ public class WarehouseSimulation extends Simulation {
 			    		wc.setChargeSpeed(Integer.parseInt(lineArr[1]));
 			    		break;
 			    	case "podRobot":
-			    		//NOTE FOR JOE: Need to get and pass the max battery value & charge speed - these are just temp variables so they're easy to spot
-			    		int maxBattery = 20;
-			    		int chargeSpeed = 2;
+			    		int maxBattery = wc.getCapacity();
+			    		int chargeSpeed = wc.getChargeSpeed();
 			    		ChargingPod chargingPod = new ChargingPod(floor.getCell(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),chargeSpeed);
 			    		runnable = floor.addActor(chargingPod,Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
 			    		runnable = floor.addActor(new Robot(floor.getCell(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])), maxBattery, chargingPod, floor.getPathFinder()),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
@@ -118,6 +117,7 @@ public class WarehouseSimulation extends Simulation {
 			actor.act();
 		}
 		wc.updateReport();
+		floor.refreshGraphics();
 		return true;
 	}
 

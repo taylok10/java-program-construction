@@ -41,7 +41,6 @@ public class GridCell extends Button {
 	 */
 	public void refreshGraphics() {
 		String check = cell.getActorTypes();
-		System.out.println(check);
 		if (!check.equals("") || check.equals("Robot")) {
 			if(check.contains("PackingStation")) {
 				this.getStyleClass().add("packing-station-cell");

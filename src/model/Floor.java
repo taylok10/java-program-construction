@@ -174,4 +174,10 @@ public class Floor extends GridPane {
 	public ArrayList<ChargingPod> getChargingPods(){
 		return chargingPods;
 	}
+
+	public void refreshGraphics() {
+		for (GridCell gCell : this.getGridCellList()) {
+			gCell.refreshGraphics();
+		}
+	}
 }
