@@ -8,9 +8,14 @@ package model;
  *
  */
 public class FuelCalculator {
-	private static final int FUEL_CONSUMPTION = 1;
-	private static final int ENCUMBERED_FUEL_CONSUMPTION = 2;
+	private int normalFuelUse;
+	private int fuelWhileEncumbered;
 
+	public FuelCalculator(int normalFuelUse, int fuelWhileEncumbered) {
+		this.normalFuelUse = normalFuelUse;
+		this.fuelWhileEncumbered =fuelWhileEncumbered;
+	}
+	
 	/**
 	 * Calculates the required fuel for the specified number of moves
 	 * 
@@ -19,7 +24,7 @@ public class FuelCalculator {
 	 *                     than usual
 	 * @return The required fuel
 	 */
-	public static int calculateFuelConsumption(int moves, boolean isEncumbered) {
-		return moves * (isEncumbered ? ENCUMBERED_FUEL_CONSUMPTION : FUEL_CONSUMPTION);
+	public int calculateFuelConsumption(int moves, boolean isEncumbered) {
+		return moves * (isEncumbered ? fuelWhileEncumbered : normalFuelUse);
 	}
 }

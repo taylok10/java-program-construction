@@ -57,16 +57,20 @@ public class WarehouseSimulation extends Simulation {
 			    		wc.setChargeSpeed(Integer.parseInt(lineArr[1]));
 			    		break;
 			    	case "podRobot":
-			    		runnable = floor.addActor(new ChargingPod(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
-			    		runnable = floor.addActor(new Robot(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
+			    		//NOTE FOR JOE: Need to get and pass the max battery value & charge speed - these are just temp variables so they're easy to spot
+			    		int maxBattery = 20;
+			    		int chargeSpeed = 2;
+			    		ChargingPod chargingPod = new ChargingPod(floor.getCell(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),chargeSpeed);
+			    		runnable = floor.addActor(chargingPod,Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
+			    		runnable = floor.addActor(new Robot(floor.getCell(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])), maxBattery, chargingPod, floor.getPathFinder()),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
 			    		break;
 			    	case "shelf":
-			    		StorageShelf nShelf = new StorageShelf(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
+			    		StorageShelf nShelf = new StorageShelf(floor.getCell(Integer.parseInt(lineArr[2]), Integer.parseInt(lineArr[3])));
 			    		runnable = floor.addActor(nShelf,Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 						shelves.put(nShelf.getUID(),nShelf);
 			    		break;
 			    	case "station":
-			    		runnable = floor.addActor(new PackingStation(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]), orders, floor.getRobots()),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
+			    		runnable = floor.addActor(new PackingStation(floor.getCell(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3])), orders, floor.getRobots()),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 			    		break;
 			    	case "order":
 			    		StorageShelf[] orderShelves = new StorageShelf[lineArr.length-2];

@@ -25,6 +25,7 @@ public class Floor extends GridPane {
 	private ArrayList<PackingStation> packingStations;
 	private ArrayList<StorageShelf> storageShelves;
 	private ArrayList<ChargingPod> chargingPods;
+	private PathFinder<GridLocation> pathFinder;
 	
 	public Floor(@NamedArg("width") int width, @NamedArg("height") int height) {
 		super();
@@ -40,8 +41,12 @@ public class Floor extends GridPane {
 		resizeGrid();
 		// To be determined in the future
 		this.setPrefSize(400, 400);
+		pathFinder = new BFS<GridLocation>(cells);
 	}
 	
+	public PathFinder<GridLocation> getPathFinder() {
+		return pathFinder;
+	}
 
 	/**
 	 * Resizes the grid of Cells(Buttons) based on set width and height variables
@@ -52,19 +57,18 @@ public class Floor extends GridPane {
         gCells = new GridCell[width][height];
         robots.clear();
 		
-		for(int i = 0; i < width; i++) {
-	        for(int j = 0; j < height; j++) {
-	        	Cell nCell = new Cell(i,j);
+		for(int y = 0; y < width; y++) { // Row
+	        for(int x = 0; x < height; x++) { // Column
+	        	Cell nCell = new Cell(x,y);
 	        	GridCell gCell = new GridCell(nCell);
 	        	gCell.setPrefSize(400/width, 400/height);
-	        	gCell.setFocusTraversable(false);
 	        	gCell.setOnMouseClicked(e -> {
 	        		WarehouseController.setUserCell(nCell);
 	        		System.out.println(nCell.getColumn() + "," + nCell.getRow());
 	            });
-	        	this.add(gCell,i,j);
-	        	cells[i][j] = nCell;
-	        	gCells[i][j] = gCell;
+	        	this.add(gCell,x,y);
+	        	cells[y][x] = nCell;
+	        	gCells[y][x] = gCell;
 	        }
         }
 		WarehouseController.setUserCell(cells[0][0]);
@@ -79,7 +83,7 @@ public class Floor extends GridPane {
 	 */
 	public boolean addActor(Actor actor, int x, int y) {
 		if (x < width && y < height) {
-			GridCell gCell = gCells[x][y];
+			GridCell gCell = gCells[y][x];
 			gCell.addActor(actor);
 			switch (actor.getClass().getSimpleName()) {
 			case "Robot":
@@ -110,7 +114,7 @@ public class Floor extends GridPane {
 	 * @param y the y coordinate of the Cell 
 	 */
 	public void removeActor(String type, int x, int y) {
-		GridCell gCell = gCells[x][y];
+		GridCell gCell = gCells[y][x];
 		gCell.removeActor(type);
 	}
 	
@@ -136,6 +140,10 @@ public class Floor extends GridPane {
 
 	public static Cell getUserCell() {
 		return userCell;
+	}
+	
+	public Cell getCell(int x, int y) {
+		return cells[y][x];
 	}
 	
 	public List<GridCell> getGridCellList(){

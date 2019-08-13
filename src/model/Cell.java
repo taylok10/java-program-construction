@@ -64,6 +64,10 @@ public class Cell implements GridLocation {
 		return false;
 	}
 	
+	public boolean removeActor(Actor actor) {
+		return removeActor(actor.getClass().getSimpleName());
+	}
+	
     /**
      * @return The cell column
      */
@@ -117,4 +121,13 @@ public class Cell implements GridLocation {
 	public boolean isBlocked() {
 		return getActorTypes().contains("Robot");
 	}
+	
+	@Override
+    public boolean equals(Object o) { 
+		if(o instanceof Cell) {
+			Cell cell = (Cell)o;
+			return cell.getRow() == getRow() && cell.getColumn() == getColumn();
+		}
+		return false;
+    } 
 }

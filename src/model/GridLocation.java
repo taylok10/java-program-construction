@@ -28,4 +28,7 @@ public interface GridLocation {
 	 * @return If the location is currently blocked
 	 */
 	boolean isBlocked();
+	
+	boolean addActor(Actor actor);
+	boolean removeActor(Actor actor);
 }

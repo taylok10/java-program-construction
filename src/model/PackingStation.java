@@ -22,8 +22,8 @@ public class PackingStation extends Actor {
 	 * @param orderManager The OrderManager of this PackingStation
 	 * @param robots       The robots this PackingStation has access to
 	 */
-	public PackingStation(int x, int y, OrderManager orderManager, List<Robot> robots) {
-		super(x, y, IDENTIFIER + id);
+	public PackingStation(GridLocation position, OrderManager orderManager, List<Robot> robots) {
+		super(position, IDENTIFIER + id);
 		id++;
 		orders = orderManager;
 		this.robots = robots;
@@ -35,7 +35,7 @@ public class PackingStation extends Actor {
 	 * @return was the item accepted successfully. This will fail if the item is not
 	 *         for this PackingStation.
 	 */
-	public boolean acceptRobotDelivery(StorageShelf shelf) {
+	public boolean acceptItemDelivery(StorageShelf shelf) {
 		if (shelf == itemInProgress.getLocation()) {
 			currentOrder.processItem(itemInProgress);
 			itemInProgress = null;
@@ -60,7 +60,7 @@ public class PackingStation extends Actor {
 
 			if (!currentOrder.isComplete()) {
 				if (itemInProgress == null) {
-					requestRobot(currentOrder.getNextItem().getLocation());
+					requestRobot(currentOrder.getNextItem());
 				}
 				// Robot is collecting item wait
 			} else if (!currentOrder.isPacked()) {
@@ -106,11 +106,12 @@ public class PackingStation extends Actor {
 		currentOrder = orders.getNextOrder();
 	}
 
-	private void requestRobot(StorageShelf shelf) {
+	private void requestRobot(OrderItem item) {
 		for (Robot robot : robots) {
-			boolean accepted = robot.assignmentRequest(shelf);
+			boolean accepted = robot.assignmentRequest(new Assignment(this, item.getLocation()));
 			if (accepted) {
 				// We have a robot, we can stop asking
+				itemInProgress = item;
 				return;
 			}
 		}

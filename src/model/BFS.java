@@ -87,7 +87,7 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 	private PathLink<T> searchNodes(T endLocation) {
 		while (!tree.isEmpty()) {
 			LinearNode<T> node = tree.remove();
-			if (node.getElement() == endLocation) {
+			if (node.getElement().equals(endLocation)) {
 				// We've reached the target. This is the quickest path.
 				PathLink<T> path = new PathLink<T>(node);
 				path.takeStep(); // Remove starting position from path
