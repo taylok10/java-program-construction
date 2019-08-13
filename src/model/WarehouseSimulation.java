@@ -19,7 +19,7 @@ import controller.WarehouseController;
  *
  */
 public class WarehouseSimulation extends Simulation {
-	OrderManager orders;
+	public static OrderManager orders;
 	Map<Order, Integer> orderStats;
 	private Map<String,StorageShelf> shelves;
 	private WarehouseController wc;
