@@ -25,7 +25,7 @@ public class PackingStationTest {
 	private OrderManager orders;
 	private Order orderOne = new Order(1, new StorageShelf[] { new StorageShelf(0, 0), new StorageShelf(0, 1) });
 	private Order orderTwo = new Order(2, new StorageShelf[] { new StorageShelf(1, 0), new StorageShelf(1, 1) });
-	private ArrayList<Robot> robots;
+	private ArrayList<Actor> robots;
 
 	@Before
 	public void setup() {
@@ -35,7 +35,7 @@ public class PackingStationTest {
 		orders.addOrder(orderTwo);
 		
 		// Setup Robots
-		robots = new ArrayList<Robot>();
+		robots = new ArrayList<Actor>();
 		
 		// Setup packing stations
 		packingStationOne = new PackingStation(0, 0, orders, robots);

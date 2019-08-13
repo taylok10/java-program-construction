@@ -19,7 +19,7 @@ import org.junit.Test;
 public class CellTest {
 	private Cell cell;
 	private OrderManager orderManager = new OrderManager();
-	private ArrayList<Robot> robots = new ArrayList<Robot>();
+	private ArrayList<Actor> robots = new ArrayList<Actor>();
 	
 	@Before
 	public void setup() {
