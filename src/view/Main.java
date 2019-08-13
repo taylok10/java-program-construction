@@ -27,6 +27,7 @@ public class Main extends Application {
 		try {
 			ws = new WarehouseSimulation();
 			wc = new WarehouseController(this);
+			
 			final FXMLLoader loader = new FXMLLoader();
 			loader.setController(wc);
 			loader.setLocation(getClass().getResource("WarehouseSimulation.fxml"));

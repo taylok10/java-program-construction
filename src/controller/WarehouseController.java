@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 
+import javafx.beans.NamedArg;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -51,8 +52,12 @@ public class WarehouseController {
 		txtChargeSpeed.setText(String.valueOf(chargeSpeed));
 	}
 	
-	public void switchScene() {
-		
+	public void switchSceneLog() {
+		System.out.println("Switching to Log View");
+	}
+	
+	public void switchSceneFloor() {
+		System.out.println("Switching to Warehouse View");
 	}
 	
 	public int getChargeSpeed() {
