@@ -55,6 +55,9 @@ public class Floor extends GridPane {
         cells = new Cell[height][width];
         gCells = new GridCell[height][width];
         robots.clear();
+        packingStations.clear();
+        chargingPods.clear();
+        storageShelves.clear();
 		
 		for(int y = 0; y < height; y++) { // Row
 	        for(int x = 0; x < width; x++) { // Column
