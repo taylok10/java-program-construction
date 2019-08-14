@@ -54,7 +54,8 @@ public class PackingStation extends Actor {
 		if (!hasOrder()) {
 			// If we don't currently have an order, take next one from the list
 			takeOrder();
-		} else {
+		} 
+		if(hasOrder()) {
 			// Update time spent processing for reporting
 			currentOrder.incrementTimeProcessing();
 
