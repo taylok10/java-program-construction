@@ -168,7 +168,7 @@ public class Robot extends Actor {
 		switch(state) {
 			case COLLECTING_ITEM:
 				moveTowards(currentAssignment.getShelf().getPosition());
-				if(getPosition() == currentAssignment.getShelf().getPosition()) {
+				if(getPosition().equals(currentAssignment.getShelf().getPosition())) {
 					// Collected item, deliver it to packing station
 					hasItem = true;
 					state = RobotState.DELIVERING_ITEM;
@@ -176,7 +176,7 @@ public class Robot extends Actor {
 				break;
 			case DELIVERING_ITEM:
 				moveTowards(currentAssignment.getPackingStation().getPosition());
-				if(getPosition() == currentAssignment.getPackingStation().getPosition()) {
+				if(getPosition().equals(currentAssignment.getPackingStation().getPosition())) {
 					// Delivered item return to pod
 					if(deliverItemToPackingStation()) {
 						state = RobotState.RETURNING_TO_POD;
@@ -187,7 +187,7 @@ public class Robot extends Actor {
 				break;
 			case RETURNING_TO_POD:
 				moveTowards(chargingPod.getPosition());
-				if(getPosition() == chargingPod.getPosition()) {
+				if(getPosition().equals(chargingPod.getPosition())) {
 					// Reached the charging pod, now we can charge
 					if(chargingPod.dockRobot(this)) {
 						state = RobotState.CHARGING;
