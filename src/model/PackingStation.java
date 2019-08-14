@@ -52,6 +52,7 @@ public class PackingStation extends Actor {
 	@Override
 	public void act() {
 		if (!hasOrder()) {
+			WarehouseSimulation.addReportEntry("PACKINGSTATION - "+ getUID() + ": Getting Order");
 			// If we don't currently have an order, take next one from the list
 			takeOrder();
 		} 
@@ -62,12 +63,15 @@ public class PackingStation extends Actor {
 			if (!currentOrder.isComplete()) {
 				if (itemInProgress == null) {
 					requestRobot(currentOrder.getNextItem());
+					WarehouseSimulation.addReportEntry("PACKINGSTATION - "+ getUID() + ": Requesting Robot");
 				}
 				// Robot is collecting item wait
 			} else if (!currentOrder.isPacked()) {
+				WarehouseSimulation.addReportEntry("PACKINGSTATION - "+ getUID() + ": Packing Order");
 				// Once has all items, takes x ticks packing
 				packOrder();
 			} else {
+				WarehouseSimulation.addReportEntry("PACKINGSTATION - "+ getUID() + ": Dispatching Order");
 				// Dispatch for delivery
 				dispatchForDelivery();
 			}

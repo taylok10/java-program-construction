@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import controller.WarehouseController;
 
@@ -127,6 +128,9 @@ public class WarehouseSimulation extends Simulation {
 	@Override
 	public boolean multiTick(int ticks) {
 		System.out.println("Multiple Ticks, Amount = " + ticks);
+		for (int i=1; i<=ticks; i++) {
+			tick();
+		}
 		return false;
 	}
 	
