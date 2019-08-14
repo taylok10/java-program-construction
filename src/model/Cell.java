@@ -36,7 +36,7 @@ public class Cell implements GridLocation {
      * @return Added actor successfully
      */
     public boolean addActor(Actor actor) {
-		if (getActorTypes().isEmpty() || (actor.getClass().getSimpleName().equals("Robot")) && (getActorTypes().equals("ChargingPod")) ) {
+		if (getActorTypes().isEmpty() || (actor.getClass().getSimpleName().equals("Robot") && !getActorTypes().equals("Robot"))) {
 			actors.add(actor);
 			return true;
 		}

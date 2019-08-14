@@ -15,6 +15,7 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 	private T[][] grid;
 	private Queue<LinearNode<T>> tree;
 	private ArrayList<T> visitedLocations;
+	private boolean ignoreObstacles;
 
 	/**
 	 * Will create a new BFS object
@@ -31,14 +32,19 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 	 * @see model.PathFinder#findPath(model.Cell, model.Cell)
 	 */
 	@Override
-	public PathLink<T> findPath(T startLocation, T targetLocation) {
+	public PathLink<T> findPath(T startLocation, T targetLocation, boolean ignoreObstacles) {
+		this.ignoreObstacles = ignoreObstacles;
 		tree = new LinkedList<LinearNode<T>>();
 		visitedLocations = new ArrayList<T>();
-		// Start at the target location so we can navigate the LinearNodes from start to
-		// finish - This is more efficient than reversing at the end
-		LinearNode<T> initialNode = new LinearNode<T>(targetLocation);
+		LinearNode<T> initialNode = new LinearNode<T>(startLocation);
 		tree.add(initialNode);
-		return searchNodes(startLocation);
+
+		PathLink<T> path = searchNodes(targetLocation);
+		// Reverse so the path gets returned in the correct order
+		path.reverse();
+		// Remove starting position from path
+		path.takeStep();
+		return path;
 	}
 
 	/**
@@ -65,7 +71,7 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 			boolean xIsValid = x >= 0 && x < grid[y].length;
 			if (xIsValid) {
 				T location = grid[y][x]; // Location is valid
-				if (!hasLocationBeenVisited(location) && !location.isBlocked()) {
+				if (!hasLocationBeenVisited(location) && (ignoreObstacles || !location.isBlocked())) {
 					// Location has not been reached quicker and is available - move here
 					LinearNode<T> element = new LinearNode<T>(location);
 					element.setNext(node);
@@ -89,9 +95,7 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 			LinearNode<T> node = tree.remove();
 			if (node.getElement().equals(endLocation)) {
 				// We've reached the target. This is the quickest path.
-				PathLink<T> path = new PathLink<T>(node);
-				path.takeStep(); // Remove starting position from path
-				return path;
+				return new PathLink<T>(node);
 			}
 			int x = node.getElement().getColumn();
 			int y = node.getElement().getRow();

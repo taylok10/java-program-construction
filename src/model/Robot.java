@@ -41,21 +41,21 @@ public class Robot extends Actor {
 		int cost = 0;
 		
 		// Calculate journey from location to shelf to collect item
-		PathLink<GridLocation> pathToShelf = pathFinder.findPath(getPosition(), assignment.getShelf().getPosition());
+		PathLink<GridLocation> pathToShelf = pathFinder.findPath(getPosition(), assignment.getShelf().getPosition(), true);
 		if(pathToShelf == null) {
 			return false;
 		}
 		cost += FUEL_CALCULATOR.calculateFuelConsumption(pathToShelf.size(), false);
 		
 		// Calculate journey from shelf to PackingStation
-		PathLink<GridLocation> pathToPackingStation = pathFinder.findPath(assignment.getShelf().getPosition(), assignment.getPackingStation().getPosition());
+		PathLink<GridLocation> pathToPackingStation = pathFinder.findPath(assignment.getShelf().getPosition(), assignment.getPackingStation().getPosition(), true);
 		if(pathToPackingStation == null) {
 			return false;
 		}
 		cost += FUEL_CALCULATOR.calculateFuelConsumption(pathToPackingStation.size(), true);
 		
 		// Need to know the charging pod location for returning to
-		PathLink<GridLocation> pathToPod = pathFinder.findPath(assignment.getPackingStation().getPosition(), chargingPod.getPosition());
+		PathLink<GridLocation> pathToPod = pathFinder.findPath(assignment.getPackingStation().getPosition(), chargingPod.getPosition(), true);
 		if(pathToPod == null) {
 			return false;
 		}
@@ -107,7 +107,7 @@ public class Robot extends Actor {
 			location = chargingPod.getPosition();
 		}
 		
-		PathLink<GridLocation> path = pathFinder.findPath(getPosition(), location);
+		PathLink<GridLocation> path = pathFinder.findPath(getPosition(), location, false);
 		if (path != null) {
 			attemptToMove(path.takeStep());
 		}
@@ -116,21 +116,21 @@ public class Robot extends Actor {
 	private boolean canFinishJourney() {
 		int cost = 0;
 		if(state == RobotState.COLLECTING_ITEM) {
-			PathLink<GridLocation> pathToShelf = pathFinder.findPath(getPosition(), currentAssignment.getShelf().getPosition());
+			PathLink<GridLocation> pathToShelf = pathFinder.findPath(getPosition(), currentAssignment.getShelf().getPosition(), false);
 			if(pathToShelf == null) {
 				// No available path currently - assume they can still finish the journey as no battery change
 				return true;
 			}
 			cost += FUEL_CALCULATOR.calculateFuelConsumption(pathToShelf.size(), false);
 			
-			PathLink<GridLocation> pathToPackingStation = pathFinder.findPath(currentAssignment.getShelf().getPosition(), currentAssignment.getPackingStation().getPosition());
+			PathLink<GridLocation> pathToPackingStation = pathFinder.findPath(currentAssignment.getShelf().getPosition(), currentAssignment.getPackingStation().getPosition(), true);
 			if(pathToPackingStation == null) {
 				// No available path currently - assume they can still finish the journey as no battery change
 				return true;
 			}
 			cost += FUEL_CALCULATOR.calculateFuelConsumption(pathToPackingStation.size(), true);
 			
-			PathLink<GridLocation> pathToPod = pathFinder.findPath(getPosition(), chargingPod.getPosition());
+			PathLink<GridLocation> pathToPod = pathFinder.findPath(getPosition(), chargingPod.getPosition(), true);
 			if(pathToPod == null) {
 				// No available path currently - assume they can still finish the journey as no battery change
 				return true;
@@ -138,14 +138,14 @@ public class Robot extends Actor {
 			cost += FUEL_CALCULATOR.calculateFuelConsumption(pathToPod.size(), false);
 		}
 		if (state == RobotState.DELIVERING_ITEM) {
-			PathLink<GridLocation> pathToPackingStation = pathFinder.findPath(getPosition(), currentAssignment.getPackingStation().getPosition());
+			PathLink<GridLocation> pathToPackingStation = pathFinder.findPath(getPosition(), currentAssignment.getPackingStation().getPosition(), false);
 			if(pathToPackingStation == null) {
 				// No available path currently - assume they can still finish the journey as no battery change
 				return true;
 			}
 			cost += FUEL_CALCULATOR.calculateFuelConsumption(pathToPackingStation.size(), true);
 			
-			PathLink<GridLocation> pathToPod = pathFinder.findPath(getPosition(), chargingPod.getPosition());
+			PathLink<GridLocation> pathToPod = pathFinder.findPath(getPosition(), chargingPod.getPosition(), true);
 			if(pathToPod == null) {
 				// No available path currently - assume they can still finish the journey as no battery change
 				return true;
@@ -153,7 +153,7 @@ public class Robot extends Actor {
 			cost += FUEL_CALCULATOR.calculateFuelConsumption(pathToPod.size(), false);
 		}
 		if (state == RobotState.RETURNING_TO_POD) {
-			PathLink<GridLocation> pathToPod = pathFinder.findPath(getPosition(), chargingPod.getPosition());
+			PathLink<GridLocation> pathToPod = pathFinder.findPath(getPosition(), chargingPod.getPosition(), false);
 			if(pathToPod == null) {
 				// No available path currently - assume they can still finish the journey as no battery change
 				return true;

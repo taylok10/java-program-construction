@@ -28,6 +28,10 @@ public class PathLink<T> {
 	 */
 	public PathLink(LinearNode<T> node) {
 		this(node.getElement());
+		generatePathFromLinearNode(node);
+	}
+	
+	private void generatePathFromLinearNode(LinearNode<T> node) {
 		LinearNode<T> currentNode = node;
 		while (currentNode.getNext() != null) {
 			currentNode = currentNode.getNext();
@@ -73,5 +77,17 @@ public class PathLink<T> {
 			current = current.getNext();
 		}
 		return count;
+	}
+	
+	public void reverse() {
+		LinearNode<T> reversedNode = new LinearNode<T>(takeStep());
+		while(size() != 0) {
+			LinearNode<T> node = new LinearNode<T>(takeStep());
+			node.setNext(reversedNode);
+			reversedNode = node;
+		}
+		nextStep = new LinearNode<T>(reversedNode.getElement());
+		lastStep = nextStep;
+		generatePathFromLinearNode(reversedNode);
 	}
 }

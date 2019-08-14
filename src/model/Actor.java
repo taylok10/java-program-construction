@@ -29,6 +29,7 @@ public abstract class Actor {
 	public boolean move(GridLocation location) {
 		if(location.addActor(this)) {
 			if(getPosition().removeActor(this)) {
+				position = location;
 				return true;
 			} else {
 				// Remove from location we previously added to so we don't have two actors

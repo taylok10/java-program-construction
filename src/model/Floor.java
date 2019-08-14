@@ -41,7 +41,6 @@ public class Floor extends GridPane {
 		resizeGrid();
 		// To be determined in the future
 		this.setPrefSize(400, 400);
-		pathFinder = new BFS<GridLocation>(cells);
 	}
 	
 	public PathFinder<GridLocation> getPathFinder() {
@@ -71,6 +70,7 @@ public class Floor extends GridPane {
 	        	gCells[y][x] = gCell;
 	        }
         }
+		pathFinder = new BFS<GridLocation>(cells);
 		WarehouseController.setUserCell(cells[0][0]);
 	}
 	
