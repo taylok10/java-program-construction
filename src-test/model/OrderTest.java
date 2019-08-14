@@ -15,10 +15,13 @@ import org.junit.Test;
  *
  */
 public class OrderTest {
+	private static final Cell LOCATION_ONE = new Cell(0,0);
+	private static final Cell LOCATION_TWO = new Cell(0,1);
+	
 	@Test
 	public void testAddItemToEmptyList() {
 		Order emptyOrder = new Order(1, new StorageShelf[] {});
-		StorageShelf shelf = new StorageShelf(0, 0);
+		StorageShelf shelf = new StorageShelf(LOCATION_ONE);
 		emptyOrder.addItem(shelf);
 		assertEquals(1, emptyOrder.outstandingItemsSize());
 		assertEquals(shelf, emptyOrder.getNextItem().getLocation());
@@ -26,7 +29,7 @@ public class OrderTest {
 
 	@Test
 	public void testAddDuplicateItem() {
-		StorageShelf shelf = new StorageShelf(0, 0);
+		StorageShelf shelf = new StorageShelf(LOCATION_ONE);
 		Order order = new Order(1, new StorageShelf[] { shelf });
 		order.addItem(shelf);
 		assertEquals(1, order.outstandingItemsSize());
@@ -74,7 +77,7 @@ public class OrderTest {
 
 	@Test
 	public void testGetNextItem() {
-		StorageShelf shelf = new StorageShelf(0, 0);
+		StorageShelf shelf = new StorageShelf(LOCATION_ONE);
 		Order order = new Order(0, new StorageShelf[] { shelf });
 		assertEquals(shelf, order.getNextItem().getLocation());
 	}
@@ -89,7 +92,7 @@ public class OrderTest {
 	public void testIsComplete() {
 		Order order = new Order(0, new StorageShelf[] {});
 		assertTrue(order.isComplete());
-		order.addItem(new StorageShelf(0, 0));
+		order.addItem(new StorageShelf(LOCATION_ONE));
 		assertFalse(order.isComplete());
 	}
 
@@ -103,7 +106,7 @@ public class OrderTest {
 
 	@Test
 	public void testProcessOrder() {
-		StorageShelf shelf = new StorageShelf(0, 0);
+		StorageShelf shelf = new StorageShelf(LOCATION_ONE);
 		Order order = new Order(1, new StorageShelf[] { shelf });
 		assertTrue(order.processItem(order.getNextItem()));
 		assertEquals(0, order.outstandingItemsSize());
@@ -112,8 +115,8 @@ public class OrderTest {
 
 	@Test
 	public void testProcessOrderInvalidOrder() {
-		StorageShelf shelf = new StorageShelf(0, 0);
-		StorageShelf shelfTwo = new StorageShelf(0, 1);
+		StorageShelf shelf = new StorageShelf(LOCATION_ONE);
+		StorageShelf shelfTwo = new StorageShelf(LOCATION_TWO);
 		Order order = new Order(1, new StorageShelf[] { shelf });
 		assertFalse(order.processItem(new OrderItem(shelfTwo, 1)));
 		assertEquals(1, order.outstandingItemsSize());

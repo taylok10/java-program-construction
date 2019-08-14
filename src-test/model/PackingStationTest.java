@@ -20,12 +20,16 @@ import org.junit.Test;
  */
 public class PackingStationTest {
 	private static final String IDENTIFIER = "ps";
+	private static final Cell LOCATION_ONE = new Cell(0,0);
+	private static final Cell LOCATION_TWO = new Cell(0,1);
+	private static final Cell LOCATION_THREE = new Cell(1,0);
+	private static final Cell LOCATION_FOUR = new Cell(1,1);
 	private PackingStation packingStationOne;
 	private PackingStation packingStationTwo;
 	private OrderManager orders;
-	private Order orderOne = new Order(1, new StorageShelf[] { new StorageShelf(0, 0), new StorageShelf(0, 1) });
-	private Order orderTwo = new Order(2, new StorageShelf[] { new StorageShelf(1, 0), new StorageShelf(1, 1) });
-	private ArrayList<Actor> robots;
+	private Order orderOne = new Order(1, new StorageShelf[] { new StorageShelf(LOCATION_ONE), new StorageShelf(LOCATION_TWO) });
+	private Order orderTwo = new Order(2, new StorageShelf[] { new StorageShelf(LOCATION_THREE), new StorageShelf(LOCATION_FOUR) });
+	private ArrayList<Robot> robots;
 
 	@Before
 	public void setup() {
@@ -35,11 +39,11 @@ public class PackingStationTest {
 		orders.addOrder(orderTwo);
 		
 		// Setup Robots
-		robots = new ArrayList<Actor>();
+		robots = new ArrayList<Robot>();
 		
 		// Setup packing stations
-		packingStationOne = new PackingStation(0, 0, orders, robots);
-		packingStationTwo = new PackingStation(0, 1, orders, robots);
+		packingStationOne = new PackingStation(LOCATION_ONE, orders, robots);
+		packingStationTwo = new PackingStation(LOCATION_TWO, orders, robots);
 	}
 
 	@Test
@@ -50,13 +54,13 @@ public class PackingStationTest {
 	@Test
 	public void testNewPackingStationIncrementsUID() {
 		int currentUID = Integer.parseInt(packingStationTwo.getUID().replaceFirst(IDENTIFIER, ""));
-		PackingStation packingStationThree = new PackingStation(0, 2, orders, robots);
+		PackingStation packingStationThree = new PackingStation(LOCATION_THREE, orders, robots);
 		assertEquals(IDENTIFIER + ++currentUID, packingStationThree.getUID());
 	}
 
 	@Test
 	public void testGetPosition() {
-		assertArrayEquals(new int[] { 0, 0 }, packingStationOne.getPosition());
+		assertEquals(LOCATION_ONE, packingStationOne.getPosition());
 	}
 
 	@Test

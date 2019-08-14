@@ -16,11 +16,16 @@ import org.junit.Test;
  */
 public class RobotTest {
 	private static final String IDENTIFIER = "r";
+	private static final Cell LOCATION_ONE = new Cell(0,0);
+	private static final Cell LOCATION_TWO = new Cell(0,1);
 	private Robot robotOne;
+	private ChargingPod chargingPod = new ChargingPod(LOCATION_ONE, 1);
+	private ChargingPod chargingPodTwo = new ChargingPod(LOCATION_TWO, 1);
+	private PathFinder pathFinder = new BFS(new Cell[4][4]);
 
 	@Before
 	public void setup() {
-		robotOne = new Robot(0, 0);
+		robotOne = new Robot(LOCATION_ONE, 1, chargingPod, pathFinder);
 	}
 
 	@Test
@@ -31,12 +36,12 @@ public class RobotTest {
 	@Test
 	public void testNewRobotIncrementsUID() {
 		int currentUID = Integer.parseInt(robotOne.getUID().replaceFirst(IDENTIFIER, ""));
-		Robot robotTwo = new Robot(0, 1);
+		Robot robotTwo = new Robot(LOCATION_TWO, 1, chargingPodTwo, pathFinder);
 		assertEquals(IDENTIFIER + ++currentUID, robotTwo.getUID());
 	}
 
 	@Test
 	public void testGetPosition() {
-		assertArrayEquals(new int[] { 0, 0 }, robotOne.getPosition());
+		assertEquals(LOCATION_ONE, robotOne.getPosition());
 	}
 }

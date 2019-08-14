@@ -3,7 +3,6 @@
  */
 package model;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -16,11 +15,13 @@ import org.junit.Test;
  */
 public class StorageShelfTest {
 	private static final String IDENTIFIER = "ss";
+	private static final Cell LOCATION_ONE = new Cell(0,0);
+	private static final Cell LOCATION_TWO = new Cell(0,1);
 	private StorageShelf storageShelfOne;
 
 	@Before
 	public void setup() {
-		storageShelfOne = new StorageShelf(0, 0);
+		storageShelfOne = new StorageShelf(LOCATION_ONE);
 	}
 
 	@Test
@@ -31,18 +32,18 @@ public class StorageShelfTest {
 	@Test
 	public void testNewStorageShelfIncrementsUID() {
 		int currentUID = Integer.parseInt(storageShelfOne.getUID().replaceFirst(IDENTIFIER, ""));
-		StorageShelf storageShelfTwo = new StorageShelf(0, 1);
+		StorageShelf storageShelfTwo = new StorageShelf(LOCATION_TWO);
 		assertEquals(IDENTIFIER + ++currentUID, storageShelfTwo.getUID());
 	}
 
 	@Test
 	public void testGetPosition() {
-		assertArrayEquals(new int[] { 0, 0 }, storageShelfOne.getPosition());
+		assertEquals(LOCATION_ONE, storageShelfOne.getPosition());
 	}
 	
 	@Test
 	public void testAct() {
-		int[] positionBeforeAct = storageShelfOne.getPosition();
+		GridLocation positionBeforeAct = storageShelfOne.getPosition();
 		String UIDBeforeAct = storageShelfOne.getUID();
 		storageShelfOne.act();
 		

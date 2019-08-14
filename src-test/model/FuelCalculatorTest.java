@@ -14,13 +14,15 @@ import org.junit.Test;
 public class FuelCalculatorTest {
 	@Test
 	public void testCalculateFuelConsumption() {
-		assertEquals(1, FuelCalculator.calculateFuelConsumption(1, false));
-		assertEquals(5, FuelCalculator.calculateFuelConsumption(5, false));
+		FuelCalculator fuelCalculator = new FuelCalculator(1 , 2);
+		assertEquals(1, fuelCalculator.calculateFuelConsumption(1, false));
+		assertEquals(5, fuelCalculator.calculateFuelConsumption(5, false));
 	}
 
 	@Test
 	public void testCalculateEncumberedFuelConsumption() {
-		assertEquals(2, FuelCalculator.calculateFuelConsumption(1, true));
-		assertEquals(10, FuelCalculator.calculateFuelConsumption(5, true));
+		FuelCalculator fuelCalculator = new FuelCalculator(1 , 2);
+		assertEquals(2, fuelCalculator.calculateFuelConsumption(1, true));
+		assertEquals(10, fuelCalculator.calculateFuelConsumption(5, true));
 	}
 }

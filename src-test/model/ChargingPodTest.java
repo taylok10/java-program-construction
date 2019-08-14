@@ -3,7 +3,6 @@
  */
 package model;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -16,11 +15,13 @@ import org.junit.Test;
  */
 public class ChargingPodTest {
 	private static final String IDENTIFIER = "c";
+	private static final Cell LOCATION_ONE = new Cell(0,0);
+	private static final Cell LOCATION_TWO = new Cell(0,1);
 	private ChargingPod chargingPodOne;
 
 	@Before
 	public void setup() {
-		chargingPodOne = new ChargingPod(0, 0);
+		chargingPodOne = new ChargingPod(LOCATION_ONE, 1);
 	}
 
 	@Test
@@ -31,12 +32,12 @@ public class ChargingPodTest {
 	@Test
 	public void testNewChargingPodIncrementsUID() {
 		int currentUID = Integer.parseInt(chargingPodOne.getUID().replaceFirst(IDENTIFIER, ""));
-		ChargingPod chargingPodTwo = new ChargingPod(0, 1);
+		ChargingPod chargingPodTwo = new ChargingPod(LOCATION_TWO, 1);
 		assertEquals(IDENTIFIER + ++currentUID, chargingPodTwo.getUID());
 	}
 
 	@Test
 	public void testGetPosition() {
-		assertArrayEquals(new int[] { 0, 0 }, chargingPodOne.getPosition());
+		assertEquals(LOCATION_ONE, chargingPodOne.getPosition());
 	}
 }
