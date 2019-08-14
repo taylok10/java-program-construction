@@ -66,11 +66,11 @@ public class Robot extends Actor {
 	}
 	
 	public boolean assignmentRequest(Assignment assignment) {
-		if(state == RobotState.IDLE && canHandleAssignment(assignment)) { // If Robot is not doing anything/not on an order
-				//Update state if accepted & assignment
-				state = RobotState.COLLECTING_ITEM;
-				currentAssignment = assignment;
-				return true;
+		if(currentAssignment == null && state != RobotState.CHARGING && canHandleAssignment(assignment)) { // If Robot is not doing anything/not on an order
+			//Update state if accepted & assignment
+			state = RobotState.COLLECTING_ITEM;
+			currentAssignment = assignment;
+			return true;
 		}
 		return false;
 	}
