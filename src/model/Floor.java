@@ -52,15 +52,15 @@ public class Floor extends GridPane {
 	 */
 	private void resizeGrid() {
         this.getChildren().removeAll(getGridCellList());
-        cells = new Cell[width][height];
-        gCells = new GridCell[width][height];
+        cells = new Cell[height][width];
+        gCells = new GridCell[height][width];
         robots.clear();
 		
-		for(int y = 0; y < width; y++) { // Row
-	        for(int x = 0; x < height; x++) { // Column
+		for(int y = 0; y < height; y++) { // Row
+	        for(int x = 0; x < width; x++) { // Column
 	        	Cell nCell = new Cell(x,y);
 	        	GridCell gCell = new GridCell(nCell);
-	        	gCell.setPrefSize(400/width, 400/height);
+	        	gCell.setPrefSize(400/height, 400/width);
 	        	gCell.setOnMouseClicked(e -> {
 	        		WarehouseController.setUserCell(nCell);
 	        		System.out.println(nCell.getColumn() + "," + nCell.getRow());
