@@ -49,22 +49,29 @@ public class WarehouseSimulation extends Simulation {
 		    String line;
 		    if ((line = br.readLine()).equals("format 1")) {
 		    	runnable = false;
+		    	boolean widthSet, heightSet, capacitySet, chargeSet, podRobotSet, shelfSet, stationSet, orderSet;
+		    	widthSet = false; heightSet = false; capacitySet = false; chargeSet = false; podRobotSet = false; shelfSet = false; stationSet = false; orderSet = false;
 			    while ((line = br.readLine()) != null) {
 			    	String[] lineArr = line.split(" ");
 			    	switch(lineArr[0]) {
 			    	case "width":
+			    		widthSet = true;
 			    		floor.setWidth(Integer.parseInt(lineArr[1]));
 			    		break;
 			    	case "height":
+			    		heightSet = true;
 			    		floor.setHeight(Integer.parseInt(lineArr[1]));
 			    		break;
 			    	case "capacity":
+			    		capacitySet = true;
 			    		wc.setCapacity(Integer.parseInt(lineArr[1]));
 			    		break;
 			    	case "chargeSpeed":
+			    		chargeSet = true;
 			    		wc.setChargeSpeed(Integer.parseInt(lineArr[1]));
 			    		break;
 			    	case "podRobot":
+			    		podRobotSet = true;
 			    		int maxBattery = wc.getCapacity();
 			    		int chargeSpeed = wc.getChargeSpeed();
 			    		ChargingPod chargingPod = new ChargingPod(floor.getCell(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])),chargeSpeed);
@@ -72,14 +79,17 @@ public class WarehouseSimulation extends Simulation {
 			    		runnable = floor.addActor(new Robot(floor.getCell(Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4])), maxBattery, chargingPod, floor.getPathFinder()),Integer.parseInt(lineArr[3]),Integer.parseInt(lineArr[4]));
 			    		break;
 			    	case "shelf":
+			    		shelfSet = true;
 			    		StorageShelf nShelf = new StorageShelf(floor.getCell(Integer.parseInt(lineArr[2]), Integer.parseInt(lineArr[3])));
 			    		runnable = floor.addActor(nShelf,Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 						shelves.put(nShelf.getUID(),nShelf);
 			    		break;
 			    	case "station":
+			    		stationSet = true;
 			    		runnable = floor.addActor(new PackingStation(floor.getCell(Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3])), orders, floor.getRobots()),Integer.parseInt(lineArr[2]),Integer.parseInt(lineArr[3]));
 			    		break;
 			    	case "order":
+			    		orderSet = true;
 			    		StorageShelf[] orderShelves = new StorageShelf[lineArr.length-2];
 			    		for (int i = 2; i < lineArr.length; i++) {
 			    			orderShelves[i-2] = shelves.get(lineArr[i]);			    			
@@ -87,9 +97,13 @@ public class WarehouseSimulation extends Simulation {
 			    		orders.addOrder(new Order(Integer.parseInt(lineArr[1]), orderShelves));
 			    		break;
 			    	default:
-			    		System.out.println("Invalid format: " + lineArr[0]);
+			    		setFailureReason("ERROR - Invalid formatting in .sim file: encountered String '" + lineArr[0]);
+			    		finish(false);
 			    		break;
 			    	}
+			    }
+			    if (runnable) {
+			    	runnable = widthSet && heightSet && capacitySet && chargeSet && podRobotSet && shelfSet && stationSet && orderSet;
 			    }
 			    if (runnable != wc.getRunnable()) {
 			    	wc.toggleRunnable();
