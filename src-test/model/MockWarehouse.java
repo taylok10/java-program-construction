@@ -30,4 +30,5 @@ public final class MockWarehouse {
 	
 	static final PackingStation PACKING_STATION = new PackingStation(MockWarehouse.LOCATION_ONE, new OrderManager(), new ArrayList<Robot>());
 	static final ChargingPod CHARGING_POD = new ChargingPod(LOCATION_ONE, 1);
+	static final Robot ROBOT = new Robot(LOCATION_ONE, 20, MockWarehouse.CHARGING_POD, MockWarehouse.PATH_FINDER);
 }

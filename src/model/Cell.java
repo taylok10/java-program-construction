@@ -6,10 +6,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import view.GridCell;
-
 /**
  * @author kelly.taylor
  *
@@ -155,7 +151,7 @@ public class Cell implements GridLocation {
 	 * @return Removed actor successfully
 	 */
 	public boolean removeActor(Actor actor) {
-		return removeActor(actor.getClass().getSimpleName());
+		return actors.remove(actor);
 	}
 
 	/*

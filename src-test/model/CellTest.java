@@ -5,6 +5,7 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -17,13 +18,7 @@ import org.junit.Test;
  *
  */
 public class CellTest {
-	private static final Cell LOCATION_ONE = new Cell(0,0);
-	private static final Cell LOCATION_TWO = new Cell(0,1);
-	private ChargingPod chargingPod = new ChargingPod(LOCATION_ONE, 1);
-	private PathFinder pathFinder = new BFS(new Cell[4][4]);
 	private Cell cell;
-	private OrderManager orderManager = new OrderManager();
-	private ArrayList<Robot> robots = new ArrayList<Robot>();
 	
 	@Before
 	public void setup() {
@@ -42,59 +37,151 @@ public class CellTest {
 	
 	@Test
 	public void testAddRobot() {
-		Robot robot = new Robot(LOCATION_ONE, 1, chargingPod, pathFinder);
-		assertTrue(cell.addActor(robot));
-		assertTrue(cell.getActors().contains(robot));
+		assertTrue(cell.addActor(MockWarehouse.ROBOT));
+		assertTrue(cell.getActors().contains(MockWarehouse.ROBOT));
+		assertEquals(1, cell.getActors().size());
 	}
 	
 	@Test
 	public void testAddPackingStation() {
-		PackingStation packingStation = new PackingStation(LOCATION_ONE, orderManager, robots);
-		assertTrue(cell.addActor(packingStation));
-		assertTrue(cell.getActors().contains(packingStation));
+		assertTrue(cell.addActor(MockWarehouse.PACKING_STATION));
+		assertTrue(cell.getActors().contains(MockWarehouse.PACKING_STATION));
+		assertEquals(1, cell.getActors().size());
 	}
 	
 	@Test
 	public void testAddStorageShelf() {
-		StorageShelf storageShelf = new StorageShelf(LOCATION_ONE);
-		assertTrue(cell.addActor(storageShelf));
-		assertTrue(cell.getActors().contains(storageShelf));
+		assertTrue(cell.addActor(MockWarehouse.SHELF_ONE));
+		assertTrue(cell.getActors().contains(MockWarehouse.SHELF_ONE));
+		assertEquals(1, cell.getActors().size());
 	}
 	
 	@Test
 	public void testAddChargingPod() {
-		ChargingPod chargingPod = new ChargingPod(LOCATION_ONE, 1);
-		assertTrue(cell.addActor(chargingPod));
-		assertTrue(cell.getActors().contains(chargingPod));
+		assertTrue(cell.addActor(MockWarehouse.CHARGING_POD));
+		assertTrue(cell.getActors().contains(MockWarehouse.CHARGING_POD));
+		assertEquals(1, cell.getActors().size());
 	}
 	
 	@Test
-	public void testIsBlockedTrue() {
-		Robot robot = new Robot(LOCATION_ONE, 1, chargingPod, pathFinder);
-		cell.addActor(robot);
+	public void testRobotBlocksCell() {
+		cell.addActor(MockWarehouse.ROBOT);
 		assertTrue(cell.isBlocked());
 	}
 	
 	@Test
-	public void testIsBlockedFalse() {
-		ChargingPod chargingPod = new ChargingPod(LOCATION_ONE, 1);
-		cell.addActor(chargingPod);
+	public void testChargingPodDoesNotBlockCell() {
+		cell.addActor(MockWarehouse.CHARGING_POD);
 		assertFalse(cell.isBlocked());
-		
-		StorageShelf storageShelf = new StorageShelf(LOCATION_ONE);
-		cell.addActor(storageShelf);
+		cell.removeActor(MockWarehouse.CHARGING_POD);
+	}
+	
+	@Test
+	public void testStorageShelfDoesNotBlockCell() {
+		cell.addActor(MockWarehouse.SHELF_ONE);
 		assertFalse(cell.isBlocked());
-		
-		PackingStation packingStation = new PackingStation(LOCATION_ONE, orderManager, robots);
-		cell.addActor(packingStation);
+		cell.removeActor(MockWarehouse.SHELF_ONE);
+	}
+	
+	@Test
+	public void testPackingStationDoesNotBlockCell() {
+		cell.addActor(MockWarehouse.PACKING_STATION);
 		assertFalse(cell.isBlocked());
+		cell.removeActor(MockWarehouse.PACKING_STATION);
 	}
 	
 	@Test
 	public void testPreventAddingDuplicateRobots() {
-		Robot robotOne = new Robot(LOCATION_ONE, 1, chargingPod, pathFinder);
-		Robot robotTwo = new Robot(LOCATION_ONE, 1, chargingPod, pathFinder);
-		cell.addActor(robotOne);
+		Robot robotTwo = new Robot(MockWarehouse.LOCATION_TWO, 1, MockWarehouse.CHARGING_POD, MockWarehouse.PATH_FINDER);
+		cell.addActor(MockWarehouse.ROBOT);
 		assertFalse(cell.addActor(robotTwo));
+		assertEquals(1, cell.getActors().size());
+	}
+	
+	@Test
+	public void testAllowRobotsToCohabitWithPackingStation() {
+		cell.addActor(MockWarehouse.PACKING_STATION);
+		assertTrue(cell.addActor(MockWarehouse.ROBOT));
+		assertEquals(2, cell.getActors().size());
+	}
+	
+	@Test
+	public void testAllowRobotsToCohabitWithShelf() {
+		cell.addActor(MockWarehouse.SHELF_ONE);
+		assertTrue(cell.addActor(MockWarehouse.ROBOT));
+		assertEquals(2, cell.getActors().size());
+	}
+	
+	@Test
+	public void testAllowRobotsToCohabitWithChargingPod() {
+		cell.addActor(MockWarehouse.CHARGING_POD);
+		assertTrue(cell.addActor(MockWarehouse.ROBOT));
+		assertEquals(2, cell.getActors().size());
+	}
+	
+	@Test
+	public void testEquals() {
+		assertTrue(cell.equals(MockWarehouse.LOCATION_ONE));
+	}
+	
+	@Test
+	public void testEqualsFalse() {
+		assertFalse(cell.equals(MockWarehouse.LOCATION_TWO));
+	}
+	
+	@Test
+	public void testEqualsNonCell() {
+		assertFalse(cell.equals(MockWarehouse.ROBOT));
+	}
+	
+	@Test
+	public void testRemovingActorByType() {
+		cell.addActor(MockWarehouse.PACKING_STATION);
+		assertTrue(cell.removeActor("PackingStation"));
+		assertEquals(0, cell.getActors().size());
+	}
+	
+	@Test
+	public void testRemovingActorOnNonAddedActorByType() {
+		cell.addActor(MockWarehouse.PACKING_STATION);
+		assertFalse(cell.removeActor("Robot"));
+		assertEquals(1, cell.getActors().size());
+	}
+	
+	@Test
+	public void testRemovingActor() {
+		cell.addActor(MockWarehouse.PACKING_STATION);
+		assertTrue(cell.removeActor(MockWarehouse.PACKING_STATION));
+		assertEquals(0, cell.getActors().size());
+	}
+	
+	@Test
+	public void testRemovingActorOnNonAddedActor() {
+		cell.addActor(MockWarehouse.PACKING_STATION);
+		assertFalse(cell.removeActor(MockWarehouse.ROBOT));
+		assertEquals(1, cell.getActors().size());
+	}
+	
+	@Test
+	public void testGetActorsDescWhenEmpty() {
+		assertEquals("", cell.getActorsDesc());
+	}
+	
+	@Test
+	public void testGetActorsDesc() {
+		cell.addActor(MockWarehouse.ROBOT);
+		assertEquals("Actors Present:\nr0\n", cell.getActorsDesc());
+	}
+	
+	@Test
+	public void testGetRobot() {
+		cell.addActor(MockWarehouse.ROBOT);
+		assertEquals(MockWarehouse.ROBOT, cell.getRobot());
+	}
+	
+	@Test
+	public void testGetRobotWhenNoRobot() {
+		cell.addActor(MockWarehouse.PACKING_STATION);
+		assertNull(cell.getRobot());
 	}
 }
