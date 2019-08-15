@@ -160,7 +160,7 @@ public class Order {
 	
 	public String orderDesc() {
 		String output = "";
-		output += "ORDER: " + timeProcessing + " ticks to process" + "\n  Shelves: ";
+		output += "ORDER:\n  " + timeProcessing + " ticks to process" + "\n  Shelves: ";
 		for (StorageShelf ss : getProcessedShelves()) {
 			output += ss.getUID() + " ";
 		}
