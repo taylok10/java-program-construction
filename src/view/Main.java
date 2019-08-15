@@ -47,6 +47,12 @@ public class Main extends Application {
 		}
 	}
 
+	
+	/**
+	 * Main method to start the application
+	 * 
+	 * @param args initial main method arguments
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

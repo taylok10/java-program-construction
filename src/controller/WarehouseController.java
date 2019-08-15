@@ -52,6 +52,10 @@ public class WarehouseController {
 	@FXML public void initialize() {
 		txtChargeCapacity.setText(String.valueOf(capacity));
 		txtChargeSpeed.setText(String.valueOf(chargeSpeed));
+		/* 
+		 * Below prevents non-numeric characters from being entered into the multi-tick value
+		 * 	TextField as a handler for the multi-tick methods
+		 */
 		txtMultiTickValue.textProperty().addListener(new ChangeListener<String>() {
 		    @Override
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
@@ -78,12 +82,18 @@ public class WarehouseController {
 		txtChargeSpeed.setText(String.valueOf(chargeSpeed));
 	}
 	
+	/**
+	 * Switched the view from current to Log
+	 */
 	public void switchSceneLog() {
 		System.out.println("Switching to Log View");
 		paneReport.setVisible(true);
 		paneFloor.setVisible(false);
 	}
 	
+	/**
+	 * Switched the view from current to Warehouse Floor
+	 */
 	public void switchSceneFloor() {
 		System.out.println("Switching to Warehouse View");
 		paneReport.setVisible(false);
@@ -124,6 +134,10 @@ public class WarehouseController {
 		System.out.println(userCell.getActorsDesc());
 	}
 	
+	/**
+	 * Generates a random new Order based on existing Storage Shelves
+	 * 	and adds it to the Order Manager
+	 */
 	public void generateRandomOrder() {
 		Random rand = new Random(); 
 		int packingTicks = rand.nextInt(9)+1;
@@ -142,9 +156,17 @@ public class WarehouseController {
 		}
 		Order nOrder = new Order(packingTicks,shelves);
 		WarehouseSimulation.orders.addOrder(nOrder);
+		if (txtAreaRandomOrders.getText().equals("Random Orders show here...")) {
+			txtAreaRandomOrders.setText("");
+		}
 		txtAreaRandomOrders.setText(txtAreaRandomOrders.getText() + nOrder.toString());		
 	}
 	
+	/**
+	 * Toggles all acting buttons based on boolean runnable
+	 * 
+	 * @param runnable a boolean value for whether the simulation can run
+	 */
 	public void setRunnable(boolean runnable) {
 		if (runnable) {
 			btnTick.setDisable(false);
@@ -161,6 +183,9 @@ public class WarehouseController {
 		}
 	}
 	
+	/**
+	 * Opens a file chooser for .sim files to be imported
+	 */
 	@SuppressWarnings("static-access")
 	public void menuItemImport() {
 		resetReport();
@@ -175,6 +200,9 @@ public class WarehouseController {
 		txtAreaOrders.setText(warehouseSimulation.orders.toString());		
 	}
 	
+	/**
+	 * Opens a file chooser for .txt logs to be exported
+	 */
 	public void menuItemExportLog() {
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().addAll(new ExtensionFilter("TXT files (*.txt)", "*.txt"));
@@ -184,6 +212,12 @@ public class WarehouseController {
         }
 	}
 	
+	/**
+	 * Saves the current log report into a specified file
+	 * 
+	 * @param log a String containing the log data
+	 * @param file a File to save the log data to
+	 */
     private void saveLog(String log, File file) {
         try {
             PrintWriter pw;
@@ -191,7 +225,7 @@ public class WarehouseController {
             pw.println(log);
             pw.close();
         } catch (IOException e) {
-            //Handle issue
+            e.printStackTrace();
         }
     }
     
@@ -203,6 +237,9 @@ public class WarehouseController {
 		return floor;
 	}
 	
+	/**
+	 * Resets the id counters for all Actors upon import of new file
+	 */
 	public void resetIds() {
 		ChargingPod.resetIdCount();
 		PackingStation.resetIdCount();
@@ -222,6 +259,9 @@ public class WarehouseController {
 		txtAreaReport.setText(report);
 	}
 	
+	/**
+	 * Resets the Text Areas on the log pane
+	 */
 	private void resetReport() {
 		txtAreaReport.setText("Perform Ticks for a report to be created...");
 		txtAreaOrders.setText("Imported Orders show here...");
