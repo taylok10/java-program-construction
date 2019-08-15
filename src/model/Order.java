@@ -34,7 +34,6 @@ public class Order {
 	 * @param shelf The item to add to the order
 	 */
 	public void addItem(StorageShelf shelf) {
-//		System.out.println(shelf.getUID());
 		if (outstandingItems.contains(new OrderItem(shelf, 0))) {
 			int index = outstandingItems.indexOf(new OrderItem(shelf, 0));
 			outstandingItems.get(index).incrementQty();
@@ -66,6 +65,32 @@ public class Order {
 			return outstandingItems.get(0);
 		}
 		return null;
+	}
+
+	/**
+	 * Gets the outstanding shelves on this Order
+	 * 
+	 * @return A list of the outstanding shelves on this order
+	 */
+	public ArrayList<StorageShelf> getOutstandingShelves() {
+		ArrayList<StorageShelf> shelves = new ArrayList<StorageShelf>();
+		for (OrderItem orderItem : outstandingItems) {
+			shelves.add(orderItem.getLocation());
+		}
+		return shelves;
+	}
+
+	/**
+	 * Gets the processed shelves on this Order
+	 * 
+	 * @return A list of the processed shelves on this order
+	 */
+	public ArrayList<StorageShelf> getProcessedShelves() {
+		ArrayList<StorageShelf> shelves = new ArrayList<StorageShelf>();
+		for (OrderItem orderItem : processedItems) {
+			shelves.add(orderItem.getLocation());
+		}
+		return shelves;
 	}
 
 	/**
@@ -112,6 +137,22 @@ public class Order {
 	}
 
 	/**
+	 * Gets a description of the order containing the time spend processing it and
+	 * the shelves
+	 * 
+	 * @return a short description of the order
+	 */
+	public String orderDesc() {
+		String output = "";
+		output += "ORDER:\n  " + timeProcessing + " ticks to process" + "\n  Shelves: ";
+		for (StorageShelf storageShelf : getProcessedShelves()) {
+			output += storageShelf.getUID() + " ";
+		}
+		output = output.trim() + "\n";
+		return output;
+	}
+
+	/**
 	 * Gets the number of outstanding unique items on the order
 	 * 
 	 * @return the number of outstanding items (unique)
@@ -141,33 +182,12 @@ public class Order {
 	public int processedItemsSize() {
 		return processedItems.size();
 	}
-	
-	public ArrayList<StorageShelf> getOutstandingShelves() {
-		ArrayList<StorageShelf> shelves = new ArrayList<StorageShelf>();
-		for (OrderItem oi : outstandingItems) {
-			shelves.add(oi.getLocation());
-		}
-		return shelves;
-	}
-	
-	public ArrayList<StorageShelf> getProcessedShelves() {
-		ArrayList<StorageShelf> shelves = new ArrayList<StorageShelf>();
-		for (OrderItem oi : processedItems) {
-			shelves.add(oi.getLocation());
-		}
-		return shelves;
-	}
-	
-	public String orderDesc() {
-		String output = "";
-		output += "ORDER:\n  " + timeProcessing + " ticks to process" + "\n  Shelves: ";
-		for (StorageShelf ss : getProcessedShelves()) {
-			output += ss.getUID() + " ";
-		}
-		output = output.trim() + "\n";
-		return output;
-	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		String output = "";
