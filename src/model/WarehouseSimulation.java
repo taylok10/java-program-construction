@@ -25,7 +25,7 @@ public class WarehouseSimulation extends Simulation {
 	private Map<String,StorageShelf> shelves;
 	private static WarehouseController wc;
 	Floor floor;
-	private static boolean packingStationsFinished, runnable;
+	private static boolean runnable;
 	private static int ticks;
 	
 	public WarehouseSimulation() {
@@ -34,7 +34,6 @@ public class WarehouseSimulation extends Simulation {
 		wc = null;
 		report = new ArrayList<String>();
 		report.add("Log:");
-		packingStationsFinished = true;
 		isCompleted = true;
 		failureReason = null;
 		ticks = 0;
@@ -96,8 +95,7 @@ public class WarehouseSimulation extends Simulation {
 			    	wc.toggleRunnable();
 			    }
 			    wc.setRunnable(runnable);
-			    isCompleted = false;	
-			    packingStationsFinished = false;
+			    isCompleted = false;
 		    } else {
 		    	System.out.println("WARNING - Invalid simulation format");
 		    }
@@ -198,10 +196,6 @@ public class WarehouseSimulation extends Simulation {
 		addReportEntry(failureReason);
 		addReportEntry("---------------------------------------------------------");
 		wc.updateReport();
-	}
-	
-	public static void finishPacking() {
-		packingStationsFinished = true;
 	}
 	
 	public static int getTicks() {
