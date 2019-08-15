@@ -7,6 +7,10 @@ import javafx.scene.control.Button;
 import model.Actor;
 import model.Cell;
 
+/**
+ * @author Joseph.Sheargold
+ *
+ */
 public class GridCell extends Button {
 	private Cell cell;
 	

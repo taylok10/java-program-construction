@@ -26,6 +26,10 @@ import model.StorageShelf;
 import model.WarehouseSimulation;
 import view.Main;
 
+/**
+ * @author Joseph.Sheargold
+ *
+ */
 public class WarehouseController {
 	@FXML Floor floor;
 	@FXML Button btnTick, btnMultiTick, btnEndRun, btnRandomOrder;

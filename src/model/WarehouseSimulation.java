@@ -15,7 +15,7 @@ import java.util.Map;
 import controller.WarehouseController;
 
 /**
- * @author kelly.taylor
+ * @author Joseph.Sheargold
  *
  */
 public class WarehouseSimulation extends Simulation {

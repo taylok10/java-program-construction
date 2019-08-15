@@ -16,6 +16,10 @@ import model.Floor;
 import model.Order;
 import model.WarehouseSimulation;
 
+/**
+ * @author Joseph.Sheargold
+ *
+ */
 public class Main extends Application {
 	public static Stage stage;
 	public static Scene sceneSimulation, sceneLog;
