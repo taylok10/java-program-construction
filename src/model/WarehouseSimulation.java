@@ -41,6 +41,7 @@ public class WarehouseSimulation extends Simulation {
 	}
 	
 	public void readSimulation(File file) {
+		ticks = 0;
 		resetReport();
 		orders.empty();
 		shelves.clear();
@@ -113,24 +114,28 @@ public class WarehouseSimulation extends Simulation {
 	@Override
 	public boolean tick() {
 		if (!isCompleted) {
-			if (!packingStationsFinished) {
-				for (Actor actor : floor.getPackingStations()) {
+			boolean flag = true;
+			for (PackingStation actor : floor.getPackingStations()) {
+				if (!actor.isFinished()) {
 					actor.act();
-				}
-			} else {
-				isCompleted = floor.isFinished();
-			}
+					flag = false;
+				}				
+			}				
 			for (Actor actor : floor.getChargingPods()) {
 				actor.act();
 			}
 			for (Actor actor : floor.getStorageShelves()) {
 				actor.act();
 			}
-			for (Actor actor : floor.getRobots()) {
+			for (Robot actor : floor.getRobots()) {
 				if (!actor.act()) {
 					return false;
 				}
+				if (!(actor.getState().equals(RobotState.IDLE) || actor.getState().equals(RobotState.RETURNING_TO_POD) || actor.getState().equals(RobotState.CHARGING)) && flag) {
+					flag = false;
+				}
 			}
+			isCompleted = flag;	
 			wc.updateReport();
 			floor.refreshGraphics();
 			ticks++;

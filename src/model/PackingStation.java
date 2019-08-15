@@ -13,6 +13,7 @@ public class PackingStation extends Actor {
 	private OrderItem itemInProgress;
 	private OrderManager orders;
 	private List<Robot> robots;
+	private boolean finished;
 
 	/**
 	 * Creates a new PackingStation
@@ -27,6 +28,7 @@ public class PackingStation extends Actor {
 		id++;
 		orders = orderManager;
 		this.robots = robots;
+		finished = false;
 	}
 
 	/**
@@ -56,7 +58,7 @@ public class PackingStation extends Actor {
 			if (!orders.isOrdersEmpty()) {
 				takeOrder();
 			} else {
-				WarehouseSimulation.finishPacking();
+				finished = true;
 			}
 		} 
 		if(hasOrder()) {
@@ -133,6 +135,10 @@ public class PackingStation extends Actor {
 
 	public static void resetIdCount() {
 		id = 0;		
+	}
+	
+	public boolean isFinished() {
+		return finished;
 	}
 	
 }
