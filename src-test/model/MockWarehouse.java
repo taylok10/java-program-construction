@@ -3,6 +3,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  * @author kelly.taylor
  *
@@ -25,4 +27,6 @@ public final class MockWarehouse {
 
 	static final Order ORDER_ONE = new Order(1, new StorageShelf[] { SHELF_ONE, SHELF_TWO });
 	static final Order ORDER_TWO = new Order(2, new StorageShelf[] { SHELF_THREE, SHELF_FOUR });
+	
+	static final PackingStation PACKING_STATION = new PackingStation(MockWarehouse.LOCATION_ONE, new OrderManager(), new ArrayList<Robot>());
 }

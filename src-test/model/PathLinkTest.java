@@ -4,6 +4,7 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +58,16 @@ public class PathLinkTest {
 	public void testTakeStepOnPathWithNoMoreSteps() {
 		path.takeStep();
 		Cell invalidStep = path.takeStep();
-		assertEquals(null, invalidStep);
+		assertNull(invalidStep);
+	}
+
+	@Test
+	public void testReverseThePath() {
+		path.addStep(stepTwo);
+		path.reverse();
+		Cell step = path.takeStep();
+		assertEquals(stepTwo, step);
+		step = path.takeStep();
+		assertEquals(stepOne, step);
 	}
 }

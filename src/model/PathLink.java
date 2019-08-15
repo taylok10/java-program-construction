@@ -30,14 +30,6 @@ public class PathLink<T> {
 		this(node.getElement());
 		generatePathFromLinearNode(node);
 	}
-	
-	private void generatePathFromLinearNode(LinearNode<T> node) {
-		LinearNode<T> currentNode = node;
-		while (currentNode.getNext() != null) {
-			currentNode = currentNode.getNext();
-			addStep(currentNode.getElement());
-		}
-	}
 
 	/**
 	 * Adds a step to the path
@@ -51,17 +43,31 @@ public class PathLink<T> {
 	}
 
 	/**
-	 * Returns the next step and removes it from the path
+	 * Generates a path from the provided LinearNode
 	 * 
-	 * @return The next step
+	 * @param node The node to generate the path from
 	 */
-	public T takeStep() {
-		LinearNode<T> step = nextStep;
-		if (step != null) {
-			nextStep = nextStep.getNext();
-			return step.getElement();
+	private void generatePathFromLinearNode(LinearNode<T> node) {
+		LinearNode<T> currentNode = node;
+		while (currentNode.getNext() != null) {
+			currentNode = currentNode.getNext();
+			addStep(currentNode.getElement());
 		}
-		return null;
+	}
+
+	/**
+	 * Reverses the order of the Path
+	 */
+	public void reverse() {
+		LinearNode<T> reversedNode = new LinearNode<T>(takeStep());
+		while (size() != 0) {
+			LinearNode<T> node = new LinearNode<T>(takeStep());
+			node.setNext(reversedNode);
+			reversedNode = node;
+		}
+		nextStep = new LinearNode<T>(reversedNode.getElement());
+		lastStep = nextStep;
+		generatePathFromLinearNode(reversedNode);
 	}
 
 	/**
@@ -78,16 +84,18 @@ public class PathLink<T> {
 		}
 		return count;
 	}
-	
-	public void reverse() {
-		LinearNode<T> reversedNode = new LinearNode<T>(takeStep());
-		while(size() != 0) {
-			LinearNode<T> node = new LinearNode<T>(takeStep());
-			node.setNext(reversedNode);
-			reversedNode = node;
+
+	/**
+	 * Returns the next step and removes it from the path
+	 * 
+	 * @return The next step
+	 */
+	public T takeStep() {
+		LinearNode<T> step = nextStep;
+		if (step != null) {
+			nextStep = nextStep.getNext();
+			return step.getElement();
 		}
-		nextStep = new LinearNode<T>(reversedNode.getElement());
-		lastStep = nextStep;
-		generatePathFromLinearNode(reversedNode);
+		return null;
 	}
 }
