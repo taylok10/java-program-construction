@@ -29,4 +29,5 @@ public final class MockWarehouse {
 	static final Order ORDER_TWO = new Order(2, new StorageShelf[] { SHELF_THREE, SHELF_FOUR });
 	
 	static final PackingStation PACKING_STATION = new PackingStation(MockWarehouse.LOCATION_ONE, new OrderManager(), new ArrayList<Robot>());
+	static final ChargingPod CHARGING_POD = new ChargingPod(LOCATION_ONE, 1);
 }

@@ -40,7 +40,7 @@ public class BFS<T extends GridLocation> implements PathFinder<T> {
 		tree.add(initialNode);
 
 		PathLink<T> path = searchNodes(targetLocation);
-		if(path != null) {
+		if (path != null) {
 			// Reverse so the path gets returned in the correct order
 			path.reverse();
 			// Remove starting position from path
