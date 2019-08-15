@@ -223,4 +223,16 @@ public class Robot extends Actor {
 	public RobotState getState() {
 		return state;
 	}
+	
+	public int getBattery() {
+		return battery;
+	}
+	
+	public void setBattery(int battery) {
+		this.battery = battery;
+	}
+	
+	public void setRobotState(RobotState state) {
+		this.state = state;
+	}
 }

@@ -43,11 +43,23 @@ public class ChargingPod extends Actor {
 	 * @return if the robot docked successfully
 	 */
 	public boolean dockRobot(Robot robot) {
-		if (this.dockedRobot == null && robot.getUID().replace('r', ' ').equals(getUID().replace('c', ' '))) {
-			this.dockedRobot = robot;
+		// Check robot is not currently docked, the robot is assigned & they are on the
+		// same space
+		if (dockedRobot == null && isAssignedRobot(robot) && robot.getPosition().equals(getPosition())) {
+			dockedRobot = robot;
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Will confirm if the provided robot is assigned to this ChargingPod
+	 * 
+	 * @param robot The robot to check
+	 * @return If this robot is the robot assigned to this pod
+	 */
+	private boolean isAssignedRobot(Robot robot) {
+		return robot.getUID().replace('r', ' ').equals(getUID().replace('c', ' '));
 	}
 
 	/**
@@ -55,6 +67,15 @@ public class ChargingPod extends Actor {
 	 */
 	public void undockRobot() {
 		dockedRobot = null;
+	}
+
+	/**
+	 * Gets the docked robot
+	 * 
+	 * @return the robot that is currently docked
+	 */
+	public Robot getDockedRobot() {
+		return dockedRobot;
 	}
 
 	/**
