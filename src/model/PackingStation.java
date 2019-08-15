@@ -18,8 +18,7 @@ public class PackingStation extends Actor {
 	/**
 	 * Creates a new PackingStation
 	 * 
-	 * @param x            The column coordiniate of this PackingStation
-	 * @param y            The row coordiniate of this PackingStation
+	 * @param position     The position of this PackingStation
 	 * @param orderManager The OrderManager of this PackingStation
 	 * @param robots       The robots this PackingStation has access to
 	 */
@@ -29,21 +28,6 @@ public class PackingStation extends Actor {
 		orders = orderManager;
 		this.robots = robots;
 		finished = false;
-	}
-
-	/**
-	 * Accepts an incoming collection from a Robot
-	 * 
-	 * @return was the item accepted successfully. This will fail if the item is not
-	 *         for this PackingStation.
-	 */
-	public boolean acceptItemDelivery(StorageShelf shelf) {
-		if (shelf == itemInProgress.getLocation()) {
-			currentOrder.processItem(itemInProgress);
-			itemInProgress = null;
-			return true;
-		}
-		return false;
 	}
 
 	/*
@@ -60,8 +44,8 @@ public class PackingStation extends Actor {
 			} else {
 				finished = true;
 			}
-		} 
-		if(hasOrder()) {
+		}
+		if (hasOrder()) {
 			// Update time spent processing for reporting
 			currentOrder.incrementTimeProcessing();
 
@@ -83,20 +67,27 @@ public class PackingStation extends Actor {
 	}
 
 	/**
+	 * Accepts an incoming collection from a Robot
+	 * 
+	 * @param shelf The item being delivered
+	 * @return was the item accepted successfully. This will fail if the item is not
+	 *         for this PackingStation.
+	 */
+	public boolean acceptItemDelivery(StorageShelf shelf) {
+		if (shelf == itemInProgress.getLocation()) {
+			currentOrder.processItem(itemInProgress);
+			itemInProgress = null;
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Dispatch the current order for delivery
 	 */
 	private void dispatchForDelivery() {
 		orders.dispatchOrder(currentOrder);
 		currentOrder = null;
-	}
-
-	/**
-	 * Gets the current order of this PackingStation
-	 * 
-	 * @return the Order that is currently being handled by this PackingStation
-	 */
-	public Order getCurrentOrder() {
-		return currentOrder;
 	}
 
 	/**
@@ -109,12 +100,45 @@ public class PackingStation extends Actor {
 	}
 
 	/**
-	 * Takes a new order to process
+	 * Gets the current order of this PackingStation
+	 * 
+	 * @return the Order that is currently being handled by this PackingStation
 	 */
-	private void takeOrder() {
-		currentOrder = orders.getNextOrder();
+	public Order getCurrentOrder() {
+		return currentOrder;
 	}
 
+	/**
+	 * Gets the item in progress
+	 * 
+	 * @return The item currently being processed by this PackingStation
+	 */
+	public OrderItem getItemInProgress() {
+		return itemInProgress;
+	}
+
+	/**
+	 * Gets if this PackingStation has finished processing orders
+	 * 
+	 * @return If this PackingStation has finished processing orders
+	 */
+	public boolean isFinished() {
+		return finished;
+	}
+
+	/**
+	 * Packs the current order
+	 */
+	private void packOrder() {
+		currentOrder.decrementTicksToPack();
+	}
+
+	/**
+	 * Requests a robot for the provided item
+	 * 
+	 * @param item The item to be assigned
+	 * @return If the item has been accepted by a Robot
+	 */
 	private void requestRobot(OrderItem item) {
 		for (Robot robot : robots) {
 			boolean accepted = robot.assignmentRequest(new Assignment(this, item.getLocation()));
@@ -127,18 +151,16 @@ public class PackingStation extends Actor {
 	}
 
 	/**
-	 * Packs the current order
+	 * Resets the id seed of PackingStations
 	 */
-	private void packOrder() {
-		currentOrder.decrementTicksToPack();
+	public static void resetIdCount() {
+		id = 0;
 	}
 
-	public static void resetIdCount() {
-		id = 0;		
+	/**
+	 * Takes a new order to process
+	 */
+	private void takeOrder() {
+		currentOrder = orders.getNextOrder();
 	}
-	
-	public boolean isFinished() {
-		return finished;
-	}
-	
 }
