@@ -42,7 +42,7 @@ public class WarehouseSimulation extends Simulation {
 	public void readSimulation(File file) {
 		ticks = 0;
 		resetReport();
-		orders.empty();
+		orders.reset();
 		shelves.clear();
 		wc.resetIds();
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
