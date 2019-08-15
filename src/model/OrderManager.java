@@ -24,7 +24,10 @@ public class OrderManager {
 	}
 	
 	public Order getNextOrder() {
-		return orders.remove();
+		if (!orders.isEmpty()) {
+			return orders.remove();
+		}
+		return null;
 	}
 	
 	public boolean addOrder(Order order) {
@@ -34,5 +37,28 @@ public class OrderManager {
 	public void empty() {
 		orders = new LinkedList<Order>();
 		dispatchedOrders = new ArrayList<Order>();
+	}
+	
+	public boolean isOrdersEmpty() {
+		return orders.isEmpty();
+	}
+	
+	public boolean isDispatchedOrdersEmpty() {
+		return dispatchedOrders.isEmpty();
+	}
+	
+	@Override
+	public String toString() {
+		String output = "";
+		int count = 1;
+		for (Order order : orders) {
+			output += "ORDER - " + count + ": " + order.getTicksToPack() + " tick(s) to pack" + "\n  Shelves: ";
+			for (StorageShelf ss :order.getOutstandingShelves()) {
+				output += ss.getUID() + " ";
+			}
+		output = output.trim() + "\n";
+		count++;
+		}
+		return output;
 	}
 }

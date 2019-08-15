@@ -75,9 +75,11 @@ public class Robot extends Actor {
 		return false;
 	}
 
-	private void attemptToMove(GridLocation location) {
+	private boolean attemptToMove(GridLocation location) {
 		if(battery == 0) {
-			// TODO: Exception to alert warehouse that it's gone wrong
+			WarehouseSimulation.setFailureReason("ERROR - Robot: " + getUID() + " has run out of battery at " + WarehouseSimulation.getTicks() + " ticks");
+			WarehouseSimulation.finish(false);
+			return false;
 		}
 			
 		if(location != null) {
@@ -86,6 +88,7 @@ public class Robot extends Actor {
 				battery -= FUEL_CALCULATOR.calculateFuelConsumption(1, hasItem);
 			}
 		}
+		return true;
 	}
 
 	public boolean deliverItemToPackingStation() {
@@ -100,7 +103,7 @@ public class Robot extends Actor {
         id = 0;
     }
 
-	private void moveTowards(GridLocation location) {
+	private boolean moveTowards(GridLocation location) {
 		if(!canFinishJourney() && emergencyBackupState == null) {
 			emergencyBackupState = state;
 			state = RobotState.RETURNING_TO_POD;
@@ -109,8 +112,9 @@ public class Robot extends Actor {
 		
 		PathLink<GridLocation> path = pathFinder.findPath(getPosition(), location, false);
 		if (path != null) {
-			attemptToMove(path.takeStep());
+			return attemptToMove(path.takeStep());
 		}
+		return true;
 	}
 	
 	private boolean canFinishJourney() {
@@ -164,10 +168,12 @@ public class Robot extends Actor {
 	}
 
 	@Override
-	public void act() {
+	public boolean act() {
+//		WarehouseSimulation.addReportEntry("ROBOT - " + getUID() + ": " + state + " | " + battery + "Units | " + getPosition().getRow() + "," + getPosition().getColumn());
+		boolean flag = true;
 		switch(state) {
 			case COLLECTING_ITEM:
-				moveTowards(currentAssignment.getShelf().getPosition());
+				flag = moveTowards(currentAssignment.getShelf().getPosition());
 				if(getPosition().equals(currentAssignment.getShelf().getPosition())) {
 					// Collected item, deliver it to packing station
 					hasItem = true;
@@ -175,7 +181,7 @@ public class Robot extends Actor {
 				}
 				break;
 			case DELIVERING_ITEM:
-				moveTowards(currentAssignment.getPackingStation().getPosition());
+				flag = moveTowards(currentAssignment.getPackingStation().getPosition());
 				if(getPosition().equals(currentAssignment.getPackingStation().getPosition())) {
 					// Delivered item return to pod
 					if(deliverItemToPackingStation()) {
@@ -186,7 +192,7 @@ public class Robot extends Actor {
 				}
 				break;
 			case RETURNING_TO_POD:
-				moveTowards(chargingPod.getPosition());
+				flag = moveTowards(chargingPod.getPosition());
 				if(getPosition().equals(chargingPod.getPosition())) {
 					// Reached the charging pod, now we can charge
 					if(chargingPod.dockRobot(this)) {
@@ -211,5 +217,10 @@ public class Robot extends Actor {
 				// Do nothing
 				break;
 		}
+		return flag;
+	}
+	
+	public RobotState getState() {
+		return state;
 	}
 }

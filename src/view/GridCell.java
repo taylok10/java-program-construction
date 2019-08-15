@@ -53,7 +53,7 @@ public class GridCell extends Button {
 			}
 			
 			if(check.contains("Robot")) {
-				this.setText("R");
+				this.setText(cell.getRobot().getUID().toUpperCase());
 			} else {
 				this.setText("");
 			}

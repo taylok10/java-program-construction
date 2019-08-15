@@ -16,7 +16,7 @@ public abstract class Actor {
 		this.position = position;
 	}
 	
-	public abstract void act();
+	public abstract boolean act();
 	
 	public GridLocation getPosition(){
 		return position;

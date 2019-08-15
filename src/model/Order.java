@@ -141,4 +141,41 @@ public class Order {
 	public int processedItemsSize() {
 		return processedItems.size();
 	}
+	
+	public ArrayList<StorageShelf> getOutstandingShelves() {
+		ArrayList<StorageShelf> shelves = new ArrayList<StorageShelf>();
+		for (OrderItem oi : outstandingItems) {
+			shelves.add(oi.getLocation());
+		}
+		return shelves;
+	}
+	
+	public ArrayList<StorageShelf> getProcessedShelves() {
+		ArrayList<StorageShelf> shelves = new ArrayList<StorageShelf>();
+		for (OrderItem oi : processedItems) {
+			shelves.add(oi.getLocation());
+		}
+		return shelves;
+	}
+	
+	public String orderDesc() {
+		String output = "";
+		output += "ORDER: " + timeProcessing + " ticks to process" + "\n  Shelves: ";
+		for (StorageShelf ss : getProcessedShelves()) {
+			output += ss.getUID() + " ";
+		}
+		output = output.trim() + "\n";
+		return output;
+	}
+	
+	@Override
+	public String toString() {
+		String output = "";
+		output += "ORDER: " + getTicksToPack() + " tick(s) to pack" + "\n  Shelves: ";
+		for (StorageShelf ss : getOutstandingShelves()) {
+			output += ss.getUID() + " ";
+		}
+		output = output.trim() + "\n";
+		return output;
+	}
 }

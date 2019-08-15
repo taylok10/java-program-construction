@@ -117,6 +117,15 @@ public class Cell implements GridLocation {
 		return output;
 	}
 	
+	public Robot getRobot() {
+		for (Actor actor : actors) {
+			if (actor.getClass().getSimpleName().equals("Robot")) {
+				return (Robot)actor;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public boolean isBlocked() {
 		return getActorTypes().contains("Robot");

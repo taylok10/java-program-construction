@@ -50,11 +50,14 @@ public class PackingStation extends Actor {
 	 * @see model.Actor#act()
 	 */
 	@Override
-	public void act() {
+	public boolean act() {
 		if (!hasOrder()) {
-			WarehouseSimulation.addReportEntry("PACKINGSTATION - "+ getUID() + ": Getting Order");
 			// If we don't currently have an order, take next one from the list
-			takeOrder();
+			if (!orders.isOrdersEmpty()) {
+				takeOrder();
+			} else {
+				WarehouseSimulation.finishPacking();
+			}
 		} 
 		if(hasOrder()) {
 			// Update time spent processing for reporting
@@ -63,19 +66,18 @@ public class PackingStation extends Actor {
 			if (!currentOrder.isComplete()) {
 				if (itemInProgress == null) {
 					requestRobot(currentOrder.getNextItem());
-					WarehouseSimulation.addReportEntry("PACKINGSTATION - "+ getUID() + ": Requesting Robot");
 				}
 				// Robot is collecting item wait
 			} else if (!currentOrder.isPacked()) {
-				WarehouseSimulation.addReportEntry("PACKINGSTATION - "+ getUID() + ": Packing Order");
 				// Once has all items, takes x ticks packing
 				packOrder();
 			} else {
-				WarehouseSimulation.addReportEntry("PACKINGSTATION - "+ getUID() + ": Dispatching Order");
+				WarehouseSimulation.addReportEntry("Completed " + currentOrder.orderDesc());
 				// Dispatch for delivery
 				dispatchForDelivery();
 			}
 		}
+		return true;
 	}
 
 	/**

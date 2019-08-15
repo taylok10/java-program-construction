@@ -39,7 +39,6 @@ public class Floor extends GridPane {
 		cells = new Cell[width][height];
 		gCells = new GridCell[width][height];
 		resizeGrid();
-		// To be determined in the future
 		this.setPrefSize(400, 400);
 	}
 	
@@ -104,7 +103,8 @@ public class Floor extends GridPane {
 			}
 			return true;
 		} else {
-			System.out.println("ERROR - " + actor.getClass().getSimpleName() + ": " + actor.getUID() + " cannot be placed outside of the grid");
+			WarehouseSimulation.setFailureReason("ERROR - " + actor.getClass().getSimpleName() + ": " + actor.getUID() + " cannot be placed outside of the grid");
+			WarehouseSimulation.finish(false);
 			return false;
 		}
 	}
@@ -146,7 +146,13 @@ public class Floor extends GridPane {
 	}
 	
 	public Cell getCell(int x, int y) {
-		return cells[y][x];
+		try{
+			return cells[y][x];
+		} catch (Exception e) {
+			WarehouseSimulation.setFailureReason("ERROR - attempt to put Actor at " + x + "," + y + " cannot be placed outside of the grid");
+			WarehouseSimulation.finish(false);
+			return null;
+		}
 	}
 	
 	public List<GridCell> getGridCellList(){
@@ -182,5 +188,15 @@ public class Floor extends GridPane {
 		for (GridCell gCell : this.getGridCellList()) {
 			gCell.refreshGraphics();
 		}
+	}
+	
+	public boolean isFinished() {
+		boolean value = true;
+		for (Robot robot : robots) {
+			if (!robot.getState().equals(RobotState.IDLE)) {
+				value = false;
+			}
+		}
+		return value;
 	}
 }

@@ -23,8 +23,10 @@ public class WarehouseSimulation extends Simulation {
 	public static OrderManager orders;
 	Map<Order, Integer> orderStats;
 	private Map<String,StorageShelf> shelves;
-	private WarehouseController wc;
+	private static WarehouseController wc;
 	Floor floor;
+	private static boolean packingStationsFinished, runnable;
+	private static int ticks;
 	
 	public WarehouseSimulation() {
 		orders = new OrderManager();
@@ -32,16 +34,21 @@ public class WarehouseSimulation extends Simulation {
 		wc = null;
 		report = new ArrayList<String>();
 		report.add("Log:");
+		packingStationsFinished = true;
+		isCompleted = true;
+		failureReason = null;
+		ticks = 0;
 	}
 	
 	public void readSimulation(File file) {
+		resetReport();
 		orders.empty();
 		shelves.clear();
 		wc.resetIds();
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 		    String line;
 		    if ((line = br.readLine()).equals("format 1")) {
-		    	boolean runnable = false;
+		    	runnable = false;
 			    while ((line = br.readLine()) != null) {
 			    	String[] lineArr = line.split(" ");
 			    	switch(lineArr[0]) {
@@ -84,12 +91,12 @@ public class WarehouseSimulation extends Simulation {
 			    		break;
 			    	}
 			    }
-			    System.out.println(runnable);
 			    if (runnable != wc.getRunnable()) {
 			    	wc.toggleRunnable();
 			    }
 			    wc.setRunnable(runnable);
-			    
+			    isCompleted = false;	
+			    packingStationsFinished = false;
 		    } else {
 		    	System.out.println("WARNING - Invalid simulation format");
 		    }
@@ -105,21 +112,35 @@ public class WarehouseSimulation extends Simulation {
 	 */
 	@Override
 	public boolean tick() {
-		for (Actor actor : floor.getPackingStations()) {
-			actor.act();
+		if (!isCompleted) {
+			if (!packingStationsFinished) {
+				for (Actor actor : floor.getPackingStations()) {
+					actor.act();
+				}
+			} else {
+				isCompleted = floor.isFinished();
+			}
+			for (Actor actor : floor.getChargingPods()) {
+				actor.act();
+			}
+			for (Actor actor : floor.getStorageShelves()) {
+				actor.act();
+			}
+			for (Actor actor : floor.getRobots()) {
+				if (!actor.act()) {
+					return false;
+				}
+			}
+			wc.updateReport();
+			floor.refreshGraphics();
+			ticks++;
+			return true;
+		} else {
+			finish(true);
+			return false;
 		}
-		for (Actor actor : floor.getChargingPods()) {
-			actor.act();
-		}
-		for (Actor actor : floor.getStorageShelves()) {
-			actor.act();
-		}
-		for (Actor actor : floor.getRobots()) {
-			actor.act();
-		}
-		wc.updateReport();
-		floor.refreshGraphics();
-		return true;
+		
+		
 	}
 
 	/* (non-Javadoc)
@@ -127,9 +148,10 @@ public class WarehouseSimulation extends Simulation {
 	 */
 	@Override
 	public boolean multiTick(int ticks) {
-		System.out.println("Multiple Ticks, Amount = " + ticks);
 		for (int i=1; i<=ticks; i++) {
-			tick();
+			if (!tick()) {
+				break;
+			}
 		}
 		return false;
 	}
@@ -144,6 +166,41 @@ public class WarehouseSimulation extends Simulation {
 	
 	public void setController(WarehouseController wc) {
 		this.wc = wc;
+	}
+	
+	public static void finish(boolean type) {
+		runnable = false;
+		wc.setRunnable(runnable);
+		if (type) {
+			isCompleted = true;
+			reportSuccess();
+		} else {
+			isCompleted = false;
+			reportFailure();
+		}
+
+	}
+	
+	private static void reportSuccess() {
+		addReportEntry("---------------------------------------------------------");
+		addReportEntry("Simulation successfully completed after " + ticks + " ticks.");
+		addReportEntry("---------------------------------------------------------");
+		wc.updateReport();
+	}
+	
+	private static void reportFailure() {
+		addReportEntry("---------------------------------------------------------");
+		addReportEntry(failureReason);
+		addReportEntry("---------------------------------------------------------");
+		wc.updateReport();
+	}
+	
+	public static void finishPacking() {
+		packingStationsFinished = true;
+	}
+	
+	public static int getTicks() {
+		return ticks;
 	}
 
 }

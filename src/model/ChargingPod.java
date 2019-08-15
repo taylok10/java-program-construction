@@ -13,11 +13,11 @@ public class ChargingPod extends Actor {
 	}
 	
 	@Override
-	public void act() {
+	public boolean act() {
 		if(robot != null) {
-			WarehouseSimulation.addReportEntry("CHARGINGPOD - " + getUID() + ": Charging ROBOT - " + robot.getUID());
 			robot.chargeBattery(chargeSpeed);
 		}
+		return true;
 	}
 	
 	public void undockRobot() {

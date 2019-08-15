@@ -10,8 +10,8 @@ import java.util.ArrayList;
  *
  */
 public abstract class Simulation {
-	boolean isCompleted;
-	String failureReason;
+	static boolean isCompleted;
+	static String failureReason;
 	static ArrayList<String> report;
 
 	public abstract boolean tick();
@@ -23,15 +23,15 @@ public abstract class Simulation {
 	}
 
 	public void setIsCompleted(boolean isCompleted) {
-		this.isCompleted = isCompleted;
+		Simulation.isCompleted = isCompleted;
 	}
 
 	public String getFailureReason() {
 		return failureReason;
 	}
 
-	public void setFailureReason(String failureReason) {
-		this.failureReason = failureReason;
+	public static void setFailureReason(String failureReason) {
+		Simulation.failureReason = failureReason;
 	}
 
 	public static void addReportEntry(String reportEntry) {
@@ -44,5 +44,11 @@ public abstract class Simulation {
 			output.append(reportEntry).append("\n");
 		}
 		return output.toString();
+	}
+	
+	protected void resetReport() {
+		failureReason = "";
+		report.clear();
+		addReportEntry("Log:");
 	}
 }
