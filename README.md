@@ -11,6 +11,7 @@ JPC Amazon Warehouse Simulation
   * Try to make text fields for speed & capacity equal
   * Make multi tick entry a little bigger (Display 3 characters - probably same size as speed/capacity)
   
+* Tidy up
   * Do last sweep of naming conventions (Mark: 60-69) 
     (Most of model has been done with the exception of: Floor & WarehouseSimulation, 
      I haven't checked the other packages) 
