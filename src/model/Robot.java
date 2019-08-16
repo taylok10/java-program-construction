@@ -359,7 +359,7 @@ public class Robot extends Actor {
 		// Check if the Robot has ended up in a deadlock state with another Robot
 		// This happens if they want each other's spaces
 		boolean inDeadlockState = deadlockCounter >= 5;
-		if (emergencyBackupState != null && !canFinishJourney()) {
+		if (emergencyBackupState == null && !canFinishJourney()) {
 			if (canReturnToPod()) {
 				emergencyBackupState = state;
 				state = RobotState.RETURNING_TO_POD;
