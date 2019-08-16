@@ -4,12 +4,14 @@ JPC Amazon Warehouse Simulation
 ## Design TODO list
 * Update UML (UML worth 10%) (Try to ensure no notation flaws as this should get us upto at least 60-69)
 * Group Reports (Worth 5%)
+  * Overall description
+  * ~~Evaluation~~
 
 ## Development TODO list
-* GUI
-  * Remove unused Help menu item
-  * Try to make text fields for speed & capacity equal
-  * Make multi tick entry a little bigger (Display 3 characters - probably same size as speed/capacity)
+* ~~GUI~~
+  * ~~Remove unused Help menu item~~
+  * ~~Try to make text fields for speed & capacity equal~~
+  * ~~Make multi tick entry a little bigger (Display 3 characters - probably same size as speed/capacity)~~
   
 * Tidy up
   * Do last sweep of naming conventions (Mark: 60-69) 
