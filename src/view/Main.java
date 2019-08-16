@@ -1,19 +1,13 @@
 package view;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
 
 import controller.WarehouseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Floor;
-import model.Order;
 import model.WarehouseSimulation;
 
 /**
