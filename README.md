@@ -8,5 +8,5 @@ JPC Amazon Warehouse Simulation
   * ~~Evaluation~~
   
 ## Testing TODO list
- * RobotTest (Mark: 50-59)
+ * ~~RobotTest (Mark: 50-59)~~
  * File input/output (Mark: 70-79)
