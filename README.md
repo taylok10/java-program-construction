@@ -2,32 +2,15 @@
 JPC Amazon Warehouse Simulation
 
 ## Design TODO list
-
-* Upadte UML
-* Start Group Report
-* Address Design TODOs in the following classes:
-  Order
+* Update UML (UML worth 10%) (Try to ensure no notation flaws as this should get us upto at least 60-69)
+* Group Reports (Worth 5%)
 
 ## Development TODO list
-
 * GUI
-  * File, Tools, Help Menu
-  * ~~Import Simulation~~
-  * Report View
-  * ~~Max Battery~~
-  * ~~Charge Per Tick~~
-* PathFinding
-  * Finish research into cooperative pathfinding. (This should be considered a bonus)
-* Simulation Import
-  * ~~Read file~~
-  * ~~Adjust Floor Dimensions~~
-  * ~~Create Actors~~
-  * ~~Allocate Actors to Cells~~
-  * Generate Orders
-* ~~MVC Architecture~~
-  * ~~Cell needs to not extend Button~~
+  * Remove unused Help menu item
+  * Try to make text fields for speed & capacity equal
+  * Make multi tick entry a little bigger (Display 3 characters - probably same size as speed/capacity)
 
 ## Testing TODO list
- * jUnit testing for all model classes
- * RobotTest needs additional unit tests
- * ChargingPod needs to unit test act()
+ * RobotTest (Mark: 50-59)
+ * File input/output (Mark: 70-79)
