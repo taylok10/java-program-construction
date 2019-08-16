@@ -41,7 +41,7 @@ public abstract class Actor {
 				this.position = position;
 				return true;
 			} else {
-				// Remove from position we previously added to so we don't have two actors
+				// Remove from position we previously added to so Actor isn't in two places
 				position.removeActor(this);
 			}
 		}

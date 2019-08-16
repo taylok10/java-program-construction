@@ -320,6 +320,15 @@ public class Robot extends Actor {
 	public RobotState getEmergencyBackupState() {
 		return emergencyBackupState;
 	}
+	
+	/**
+	 * Gets is the Robot is currently carrying an item
+	 * 
+	 * @return Is the robot carrying an item?
+	 */
+	public boolean getHasItem() {
+		return hasItem;
+	}
 
 	/**
 	 * Gets the maximum battery level of the robot
