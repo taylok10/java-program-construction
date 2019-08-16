@@ -10,6 +10,11 @@ JPC Amazon Warehouse Simulation
   * Remove unused Help menu item
   * Try to make text fields for speed & capacity equal
   * Make multi tick entry a little bigger (Display 3 characters - probably same size as speed/capacity)
+  
+  * Do last sweep of naming conventions (Mark: 60-69) 
+    (Most of model has been done with the exception of: Floor & WarehouseSimulation, 
+     I haven't checked the other packages) 
+  * Ensure everything has a javadoc comment (If we've done everything else well this could get us 80+)
 
 ## Testing TODO list
  * RobotTest (Mark: 50-59)
