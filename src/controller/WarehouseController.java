@@ -235,10 +235,6 @@ public class WarehouseController {
             e.printStackTrace();
         }
     }
-    
-    public void helpDialog() {
-    	//add help dialog
-    }
 	
 	public Floor getFloor() {
 		return floor;
