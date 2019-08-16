@@ -20,10 +20,10 @@ import controller.WarehouseController;
  */
 public class WarehouseSimulation extends Simulation {
 	public static OrderManager orders;
-	Map<Order, Integer> orderStats;
+	private Map<Order, Integer> orderStats;
 	private Map<String,StorageShelf> shelves;
 	private static WarehouseController wc;
-	Floor floor;
+	private Floor floor;
 	private static boolean runnable;
 	private static int ticks;
 	
