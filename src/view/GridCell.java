@@ -18,6 +18,9 @@ public class GridCell extends Button {
 		this.cell = cell;
 	}
 	
+	/**
+	 * Changes the style of the button to match the actors present.
+	 */
 	public void refreshStyle() {
 		List<String> toRemove = new ArrayList<String>();
 		
@@ -68,12 +71,18 @@ public class GridCell extends Button {
 		}
 	}
 	
+	/**
+	 * Adds actor to the linked Cell and refreshes graphics
+	 */
 	public void addActor(Actor actor) {
 		if(cell.addActor(actor)) {
 			refreshGraphics();
 		}
 	}
 	
+	/**
+	 * Removes actor from the linked Cell and refreshes graphics
+	 */
 	public void removeActor(String type) {
 		if(cell.removeActor(type)) {
 			refreshGraphics();

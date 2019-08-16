@@ -38,6 +38,12 @@ public class WarehouseSimulation extends Simulation {
 		ticks = 0;
 	}
 	
+	/**
+	 * Reads and imports the passed .sim file into the application and 
+	 *  resets all of the relevant variables for a new run. 
+	 * 
+	 * @param file a file to be read and imported into the simulation
+	 */
 	public void readSimulation(File file) {
 		ticks = 0;
 		resetReport();
@@ -184,6 +190,12 @@ public class WarehouseSimulation extends Simulation {
 		this.wc = wc;
 	}
 	
+	/**
+	 * Finishes the simulation based on a flag given for whether or not
+	 *  it was a success and calls a relevant report method.
+	 * 
+	 * @param type a boolean value which indicates type of completion
+	 */
 	public static void finish(boolean type) {
 		runnable = false;
 		wc.setRunnable(runnable);
@@ -197,6 +209,9 @@ public class WarehouseSimulation extends Simulation {
 
 	}
 	
+	/**
+	 * Updates the report in the GUI a success message and tick count
+	 */
 	private static void reportSuccess() {
 		addReportEntry("---------------------------------------------------------");
 		addReportEntry("Simulation successfully completed after " + ticks + " ticks.");
@@ -204,6 +219,9 @@ public class WarehouseSimulation extends Simulation {
 		wc.updateReport();
 	}
 	
+	/**
+	 * Updates the report in the GUI with the stored failure message
+	 */
 	private static void reportFailure() {
 		addReportEntry("---------------------------------------------------------");
 		addReportEntry(failureReason);

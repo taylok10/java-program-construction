@@ -53,6 +53,9 @@ public class WarehouseController {
 		warehouseSimulation = mt.getWarehouseSimulation();
 	}
 	
+	/**
+	 * Initialise the FXML components with values / filters
+	 */
 	@FXML public void initialize() {
 		txtChargeCapacity.setText(String.valueOf(capacity));
 		txtChargeSpeed.setText(String.valueOf(chargeSpeed));

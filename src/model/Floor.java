@@ -184,19 +184,13 @@ public class Floor extends GridPane {
 		return chargingPods;
 	}
 
+	/**
+	 * Calls a graphics update on all Grid Cells
+	 */
 	public void refreshGraphics() {
 		for (GridCell gCell : this.getGridCellList()) {
 			gCell.refreshGraphics();
 		}
 	}
 	
-	public boolean isFinished() {
-		boolean value = true;
-		for (Robot robot : robots) {
-			if (!robot.getState().equals(RobotState.IDLE)) {
-				value = false;
-			}
-		}
-		return value;
-	}
 }
