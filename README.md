@@ -6,10 +6,10 @@ JPC Amazon Warehouse Simulation
 * Group Reports (Worth 5%)
 
 ## Development TODO list
-* GUI
-  * Remove unused Help menu item
-  * Try to make text fields for speed & capacity equal
-  * Make multi tick entry a little bigger (Display 3 characters - probably same size as speed/capacity)
+* ~~GUI~~
+  * ~~Remove unused Help menu item~~
+  * ~~Try to make text fields for speed & capacity equal~~
+  * ~~Make multi tick entry a little bigger (Display 3 characters - probably same size as speed/capacity)~~
   
 * Tidy up
   * Do last sweep of naming conventions (Mark: 60-69) 
